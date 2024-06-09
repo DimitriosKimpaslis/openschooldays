@@ -5,6 +5,7 @@ import App from './App.jsx';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './components/Home';
 import Slideshow from './components/Slideshow.jsx';
+import SignIn from './components/SignIn.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -28,6 +29,7 @@ root.render(
           <Route index element={<Home />} />
           <Route path='/about' element={<h1>About</h1>} />
           <Route path='/slide' element={<Slideshow />} />
+          <Route path='/signin' element={<SignIn />} />
         </Route>
       </Routes>
     </BrowserRouter>

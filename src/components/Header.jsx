@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import birdLogo from '../media/images/55.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
 const Header = () => {
-    const [projectsIsOpen, setProjectsIsOpen] = useState(false)
     return (
         <div className=' text-gray-50 w-full flex justify-between items-center py-6 px-10 absolute z-50'>
             <div className='flex items-center space-x-2'>
