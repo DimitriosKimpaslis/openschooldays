@@ -6,7 +6,6 @@ import carousel3 from "../media/images/carousel3.jpg";
 const Slideshow = () => {
     const imageUrls = [carousel1, carousel2, carousel3];
     const [currentIndex, setCurrentIndex] = useState(0);
-    const firstRender = useRef(true);
     const imageRefs = useRef([]);
 
     const nextSlide = () => {
@@ -14,10 +13,6 @@ const Slideshow = () => {
     };
 
     useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
 
         const currentImage = imageRefs.current[currentIndex];
         const previousImage = imageRefs.current[(currentIndex - 1 + imageUrls.length) % imageUrls.length];
