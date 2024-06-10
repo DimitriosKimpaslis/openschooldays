@@ -13,3 +13,7 @@
 ul.primary li:hover ul {
     display: block;
 }
+
+.redTest {
+    color: red;
+}
