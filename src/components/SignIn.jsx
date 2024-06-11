@@ -26,7 +26,8 @@ const SignIn = () => {
 
 
     return (
-        <div className='pt-[400px]'>
+        <div>
+            <div className='h-[400px] bg-black'></div>
             <h1>{user ? user.email : ''}</h1>
             <button onClick={async () => await supabase.auth.signOut()}>Sign Out</button>
             <h2>Sign In</h2>
