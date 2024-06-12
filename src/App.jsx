@@ -7,14 +7,27 @@ export const UserContext = createContext()
 
 function App() {
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     const getUser = async () => {
-      const user = await supabase.auth.getUser()
-      setUser(user.data.user)
-    }
+      const user = await supabase.auth.getUser();
+      setUser(user.data.user);
+    };
     getUser();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    console.log(user);
+    localStorage.setItem('user', JSON.stringify(user)); // Save user to local storage
+  }, [user]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser)); // Retrieve user from local storage
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

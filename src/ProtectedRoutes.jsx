@@ -4,10 +4,10 @@ import { UserContext } from "./App";
 
 const ProtectedRoutes = () => {
 
-    const {user} = useContext(UserContext)    
+    const { user } = useContext(UserContext)   
 
     const changeURL = () => {
-        window.location.href = '/signin'
+        window.location.href = '/signin';
     }
 
     return (

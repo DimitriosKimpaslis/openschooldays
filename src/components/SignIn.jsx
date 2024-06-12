@@ -22,6 +22,7 @@ const SignIn = () => {
         // Perform sign-in logic here
         const data = await supabase.auth.signInWithPassword({ email, password });
         console.log(data);
+        window.location.href = '/';
     };
 
 
