@@ -17,3 +17,7 @@ ul.primary li:hover ul {
 .redTest {
     color: red;
 }
+
+div.inputDeletion div:hover {
+    display: none;
+}

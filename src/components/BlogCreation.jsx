@@ -8,62 +8,105 @@ import { Tooltip } from '@mui/material';
 import { DynamicTextArea } from './DynamicTextArea';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import CloudDoneIcon from '@mui/icons-material/CloudDone';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const BlogCreation = () => {
-    const [title, setTitle] = useState('')
-    const [thumbnail, setThumbnail] = useState('')
+    const [title, setTitle] = useState({ value: '', rows: 1 })
+    const [thumbnail, setThumbnail] = useState('https://placehold.co/600x400/png')
     const [content, setContent] = useState([])
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        const postContent = localStorage.getItem('postContent');
-        if (postContent) {
-            const { title, content } = JSON.parse(postContent);
-            setTitle(title)
-            setContent(content)
+        const content = localStorage.getItem('content');
+        const title = localStorage.getItem('title');
+        const thumbnail = localStorage.getItem('thumbnail');
+        if (content) {
+            setContent(JSON.parse(content))
+        }
+        if (title) {
+            setTitle(JSON.parse(title))
+        }
+        if (thumbnail) {
+            setThumbnail(JSON.parse(thumbnail))
         }
     }, [])
 
 
-    const handleUploadImage = async (e) => {
-        // setImageLoading(true)
-        let file = e.target.files[0];
-        const fileName = document.getElementById('file-name');
-        if (file) {
-            fileName.textContent = file.name;
-        } else {
-            fileName.textContent = 'No file selected';
+
+    useEffect(() => {
+        if (content.length > 0) {
+            localStorage.setItem('content', JSON.stringify(content));
         }
+    }, [content])
+
+    useEffect(() => {
+        if (title.value.length > 0) {
+            localStorage.setItem('title', JSON.stringify(title));
+        }
+    }, [title])
+
+    useEffect(() => {
+        if (thumbnail !== 'https://placehold.co/600x400/png') {
+            localStorage.setItem('thumbnail', JSON.stringify(thumbnail));
+        }
+    }, [thumbnail])
+
+
+
+    const handleUploadImage = async (e, index) => {
+        let file = e.target.files[0];
+        const timestamp = Date.now().toString();
+        const imageNameRandomizer = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + timestamp;
         const { data, error } = await supabase
             .storage
-            .from('Media') // Specify the folder path here
-            .upload('hello', file, {
-            cacheControl: '3600',
-            upsert: false
+            .from('Media/BlogPostsImages') // Specify the folder path here
+            .upload(imageNameRandomizer, file, {
+                cacheControl: '3600',
+                upsert: false
             })
-        console.log(data, error)
-        // if (data) {
-        //     temp.image = 'https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/BlogPostsImages/' + data.path
-        // }
-        // else if (error.error === 'Duplicate') {
-        //     let temp = { ...movieData };
-        //     temp.image = 'https://ebmdpaztusgpdjuuktzz.supabase.co/storage/v1/object/public/Images/Reviews/' + file.name
-        //     setMovieData(temp)
-        //     setImageLoading(false)
-        // }
-        // else {
-        //     console.log(error)
-        // }
+        //if the picture is uploaded successfully, the data object will contain the path to the image
+        if (data) {
+            const publicImageUrl = "https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/BlogPostsImages/" + data.path;
+            const updatedContent = [...content]
+            updatedContent[index].value = publicImageUrl
+            setContent(updatedContent)
+        } else if (error.error === 'Duplicate') { //if the image already exists in the storage bucket , find the url of the image
+            console.log('Duplicate')
+        } else {
+            console.log(error)
+        }
     }
 
+    const handleThumbnailUpload = async (e) => {
+        let file = e.target.files[0];
+        const timestamp = Date.now().toString();
+        const imageNameRandomizer = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + timestamp;
+        const { data, error } = await supabase
+            .storage
+            .from('Media/BlogPostsImages') // Specify the folder path here
+            .upload(imageNameRandomizer, file, {
+                cacheControl: '3600',
+                upsert: false
+            })
+        //if the picture is uploaded successfully, the data object will contain the path to the image
+        if (data) {
+            const publicImageUrl = "https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/BlogPostsImages/" + data.path;
+            setThumbnail(publicImageUrl)
+        } else if (error.error === 'Duplicate') { //if the image already exists in the storage bucket , find the url of the image
+            console.log('Duplicate')
+        } else {
+            console.log(error)
+        }
+    }
 
 
     const addNewRows = (e) => {
         const inputElement = e.target
         const lineHeight = parseInt(window.getComputedStyle(inputElement).lineHeight, 10);
         const rows = Math.ceil(inputElement.scrollHeight / lineHeight);
-        console.log(lineHeight, inputElement.scrollHeight, rows)
         inputElement.rows = rows - 1// -1 to prevent the text area from scrolling down when the user types;
         return rows - 1;
     }
@@ -80,19 +123,18 @@ const BlogCreation = () => {
         updatedContent[index].value = e.target.value
         updatedContent[index].rows = inputRows
         setContent(updatedContent)
-        const postContent = {
-            title: title,
-            content: updatedContent
-        };
-        localStorage.setItem('postContent', JSON.stringify(postContent));
-
     }
 
-    // const handleBulletChange = (e, index, i) => {
-    //     const updatedContent = [...content]
-    //     updatedContent[index].value[i] = e.target.value
-    //     setContent(updatedContent)
-    // }
+    const handleTitleChange = (e) => {
+        let inputRows
+        if (e.target.value.length === 0) {
+            e.target.rows = 1;
+        } else {
+            inputRows = addNewRows(e)
+        }
+        setTitle({ value: e.target.value, rows: inputRows })
+    }
+
 
 
 
@@ -109,7 +151,7 @@ const BlogCreation = () => {
                 updatedContent.push({ type: 'bullets', value: [], rows: 1 })
                 break
             case 'image':
-                updatedContent.push({ type: 'image', value: '' })
+                updatedContent.push({ type: 'image', value: 'https://placehold.co/600x400/png' })
                 break
             default:
                 break
@@ -118,45 +160,81 @@ const BlogCreation = () => {
         setContent(updatedContent)
     }
 
+    const removeField = (index) => {
+        const updatedContent = [...content]
+        updatedContent.splice(index, 1)
+        setContent(updatedContent)
+    }
+
     return (
         <div>
             <div className='h-[200px] bg-black'></div>
             <div className='flex flex-col items-center text-2xl'>
-                <h1>Blog Creation</h1>
-                <form className='space-y-5'>
-                    <div>
-                        <label>Title:</label>
-                        <input className='' type="text" value={title} onChange={(e) => {
-                            setTitle(e.target.value)
-                            const postContent = {
-                                title: title,
-                                content: content
-                            };
-                            localStorage.setItem('postContent', JSON.stringify(postContent));
-                        }} />
+                <p className='text-7xl font-bold text-newPurple2 my-10'>Blog Creation</p>
+                <form className=' flex flex-col gap-3'>
+                    <div className='space-y-5'>
+                        <p className=' text-5xl font-extralight'>Title:</p>
+                        <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
                     </div>
+                    <p className='  text-5xl font-extralight'>Thumbnail:</p>
+                    <label className='w-fit relative'>
+                        <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                        <div className='flex items-center'>
+                            {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
+                            <div className='flex items-center gap-1'>
+                                {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
+                            </div>
+                        </div>
+                        <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
+                        <div className='absolute inset-0 bg-newSomon opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                            <FileUploadIcon className='text-black text-7xl' fontSize='' />
+                        </div>
+                    </label>
                     <div>
-                        <label>Thumbnail:</label>
-                        <input type="file" onChange={(e) => handleUploadImage(e)} id='file-name'/>
-                    </div>
-                    <div>
-                        <p className='mb-4'>Add Content:</p>
+                        <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
                         <div className='flex flex-col gap-5 mb-10 h-fit'>
                             {content.map((field, index) => {
                                 switch (field.type) {
                                     case 'title':
-                                        return <DynamicTextArea key={index} onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-5xl resize-none focus:outline-none border-r-4 border-black overflow-hidden' rows={content[index].rows} />
+                                        return (
+                                            <div className='flex items-center' key={index}>
+                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+                                        )
                                     case 'paragraph':
-                                        return <DynamicTextArea key={index} onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden' rows={content[index].rows} />
-                                    // case 'bullets':
-                                    //     return (<div key={index}>
-                                    //         {field.value.map((bullet, i) => {
-                                    //             console.log(bullet)
-                                    //             return <DynamicTextArea onChange={(e) => handleBulletChange(e, index, i)} type='text' value={bullet} key={i} />
-                                    //         })}
-                                    //     </div>)
+                                        return (
+                                            <div className='flex items-center' key={index}>
+                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+                                        )
                                     case 'image':
-                                        return <input key={index} onChange={(e) => handleUploadImage(e)} type='file' />
+                                        let imageSelected = false;
+                                        if (content[index].value !== 'https://placehold.co/600x400/png') {
+                                            imageSelected = true;
+                                        }
+                                        return (
+                                            <div className='flex items-center'>
+                                                <label key={index} className='w-fit relative'>
+                                                    <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                                                    <div className='flex items-center'>
+                                                        {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                                        <div className='flex items-center gap-1'>
+                                                            {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                                            <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
+                                                        </div>
+                                                    </div>
+                                                    <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
+                                                    <div className='absolute inset-0 bg-newSomon opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
+                                                        <FileUploadIcon className='text-black text-7xl' fontSize='' />
+                                                    </div>
+                                                </label>
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+
+                                        )
                                     default:
                                         return null
                                 }
@@ -174,11 +252,6 @@ const BlogCreation = () => {
                                         <FormatAlignJustifyIcon />
                                     </div>
                                 </Tooltip>
-                                {/* <Tooltip title={<p className='text-base'>Bullets</p>}>
-                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('bullets')}>
-                                        <FormatListBulletedIcon />
-                                    </div>
-                                </Tooltip> */}
                                 <Tooltip title={<p className='text-base'>Image</p>}>
                                     <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
                                         <ImageIcon />
