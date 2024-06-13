@@ -11,7 +11,6 @@ export function DynamicTextArea({ placeholder = '', value = '', onChange, styles
                 ref={textAreaRef}
                 className={styles}
                 onChange={onChange}
-                placeholder={placeholder}
                 value={value}
                 rows={rows}
                 placeholder={"Type something..."}

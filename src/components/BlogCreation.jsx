@@ -166,11 +166,19 @@ const BlogCreation = () => {
         setContent(updatedContent)
     }
 
+    const goToPreview = () => {
+        if (title.value.length === 0 || content.length === 0 || thumbnail === 'https://placehold.co/600x400/png') {
+            alert('Please fill in all fields')
+        } else {
+            navigate('/preview')
+        }
+    }
+
     return (
         <div>
             <div className='h-[200px] bg-black'></div>
             <div className='flex flex-col items-center text-2xl'>
-                <p className='text-7xl font-bold text-newPurple2 my-10'>Blog Creation</p>
+                <p className='text-7xl font-bold my-20'>Blog Creation</p>
                 <form className=' flex flex-col gap-3'>
                     <div className='space-y-5'>
                         <p className=' text-5xl font-extralight'>Title:</p>
@@ -187,8 +195,8 @@ const BlogCreation = () => {
                             </div>
                         </div>
                         <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
-                        <div className='absolute inset-0 bg-newSomon opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
-                            <FileUploadIcon className='text-black text-7xl' fontSize='' />
+                        <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                            <FileUploadIcon className='text-white text-7xl' fontSize='' />
                         </div>
                     </label>
                     <div>
@@ -227,8 +235,8 @@ const BlogCreation = () => {
                                                         </div>
                                                     </div>
                                                     <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
-                                                    <div className='absolute inset-0 bg-newSomon opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
-                                                        <FileUploadIcon className='text-black text-7xl' fontSize='' />
+                                                    <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
+                                                        <FileUploadIcon className='text-white text-7xl' fontSize='' />
                                                     </div>
                                                 </label>
                                                 <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
@@ -261,7 +269,7 @@ const BlogCreation = () => {
                         </div>
 
                     </div>
-                    <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={() => navigate('/preview')}>Preview</button>
+                    <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={goToPreview}>Preview</button>
                 </form>
             </div>
         </div>
