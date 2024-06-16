@@ -27,6 +27,11 @@ function App() {
       setUser(JSON.parse(storedUser)); // Retrieve user from local storage
     }
   }, []);
+  
+  useEffect(() => {
+    console.log(user);
+  }
+  , [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

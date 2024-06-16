@@ -10,6 +10,7 @@ import ProtectedRoutes from './ProtectedRoutes.jsx';
 import Profile from './components/Profile.jsx';
 import BlogCreation from './components/BlogCreation.jsx';
 import Preview from './components/Preview.jsx';
+import EditProfile from './components/EditProfile.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -38,6 +39,7 @@ root.render(
           <Route element={<ProtectedRoutes />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/blog-creation' element={<BlogCreation />} />
+            <Route path='edit-profile' element={<EditProfile />} />
           </Route>
         </Route>
       </Routes>

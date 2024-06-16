@@ -25,7 +25,7 @@ const Profile = () => {
                 <div onClick={signOut} className='bg-red-600 hover:bg-red-700 flex justify-center items-center cursor-pointer'>
                     <p className='text-5xl'>Logout</p>
                 </div>
-                <div className='bg-blue-600 hover:bg-blue-700 flex justify-center items-center cursor-pointer'>
+                <div className='bg-blue-600 hover:bg-blue-700 flex justify-center items-center cursor-pointer' onClick={() => navigate('/edit-profile')}>
                     <p className='text-5xl'>Edit Profile</p>
                 </div>
                 <div onClick={() => navigate('/blog-creation')} className='bg-green-600  hover:bg-green-700 flex justify-center items-center cursor-pointer'>

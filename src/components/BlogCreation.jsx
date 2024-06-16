@@ -30,7 +30,7 @@ const BlogCreation = () => {
             setTitle(JSON.parse(title))
         }
         if (thumbnail) {
-            setThumbnail(JSON.parse(thumbnail))
+            setThumbnail(thumbnail)
         }
     }, [])
 
@@ -50,7 +50,7 @@ const BlogCreation = () => {
 
     useEffect(() => {
         if (thumbnail !== 'https://placehold.co/600x400/png') {
-            localStorage.setItem('thumbnail', JSON.stringify(thumbnail));
+            localStorage.setItem('thumbnail', thumbnail);
         }
     }, [thumbnail])
 
@@ -224,8 +224,8 @@ const BlogCreation = () => {
                                             imageSelected = true;
                                         }
                                         return (
-                                            <div className='flex items-center'>
-                                                <label key={index} className='w-fit relative'>
+                                            <div key={index} className='flex items-center'>
+                                                <label className='w-fit relative'>
                                                     <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
                                                     <div className='flex items-center'>
                                                         {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}

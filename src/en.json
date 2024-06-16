@@ -1,0 +1,23 @@
+{
+    "_lang": "en",
+    "pages": {
+        "home": {
+            "title": "Home",
+            "content": "Welcome to the home page",
+            "actions": {
+                "action1": "Action 1",
+                "action2": "Action 2",
+                "action3": "Action 3",
+                "action4": "Action 4"
+            }
+        },
+        "about": {
+            "title": "About",
+            "content": "Welcome to the about page"
+        },
+        "contact": {
+            "title": "Contact",
+            "content": "Welcome to the contact page"
+        }
+    }
+}
