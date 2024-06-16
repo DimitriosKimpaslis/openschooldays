@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import AddIcon from '@mui/icons-material/Add';
 import TitleIcon from '@mui/icons-material/Title';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ImageIcon from '@mui/icons-material/Image';
 import { Tooltip } from '@mui/material';
-import { DynamicTextArea } from './DynamicTextArea';
+import { DynamicTextArea } from '../etc/DynamicTextArea';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../client';
+import { supabase } from '../../client';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';

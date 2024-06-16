@@ -1,13 +1,13 @@
 
 import React, { useContext, useState } from 'react';
-import { supabase } from '../client';
-import { UserContext } from '../App';
+import { supabase } from '../../client';
+import { UserContext } from '../../App';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);

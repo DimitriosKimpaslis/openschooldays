@@ -1,12 +1,12 @@
 import React from 'react'
-import { supabase } from '../client'
+import { supabase } from '../../client'
 import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
 
 
     const navigate = useNavigate()
-    
+
     const changeURL = () => {
         window.location.href = '/';
     }
@@ -31,8 +31,11 @@ const Profile = () => {
                 <div onClick={() => navigate('/blog-creation')} className='bg-green-600  hover:bg-green-700 flex justify-center items-center cursor-pointer'>
                     <p className='text-5xl'>Create Blog Post</p>
                 </div>
-                <div className='bg-purple-600 hover:bg-purple-700 flex justify-center items-center cursor-pointer'>
+                <div onClick={() => navigate('/collaboration')} className='bg-purple-600 hover:bg-purple-700 flex justify-center items-center cursor-pointer'>
                     <p className='text-5xl'>Collaboration Tool</p>
+                </div>
+                <div onClick={() => navigate('/your-blogs/1')} className='bg-purple-600 hover:bg-purple-700 flex justify-center items-center cursor-pointer'>
+                    <p className='text-5xl'>Your Blog Posts</p>
                 </div>
 
             </div>

@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../App'
-import { supabase } from '../client'
+import { UserContext } from '../../App'
+import { supabase } from '../../client'
+import { useNavigate } from 'react-router-dom'
 
 const Preview = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState([])
   const [thumbnail, setThumbnail] = useState('')
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     let previewTitle = localStorage.getItem('title')
@@ -42,6 +45,10 @@ const Preview = () => {
     }
 
     console.log('New post inserted:', data)
+    localStorage.removeItem('title')
+    localStorage.removeItem('content')
+    localStorage.removeItem('thumbnail')
+    navigate('/')
   }
 
   return (

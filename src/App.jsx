@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Header from './components/Header';
+import Header from './components/etc/Header';
 import { createContext, useEffect, useState } from 'react';
 import { supabase } from './client';
 
@@ -27,17 +27,16 @@ function App() {
       setUser(JSON.parse(storedUser)); // Retrieve user from local storage
     }
   }, []);
-  
+
   useEffect(() => {
     console.log(user);
   }
-  , [user]);
+    , [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <div className="">
+      <div>
         <Header />
-        {/* a spacer for the transparent absolute header */}
         <Outlet />
       </div>
     </UserContext.Provider>

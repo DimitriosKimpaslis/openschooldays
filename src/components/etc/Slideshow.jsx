@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import carousel1 from "../media/images/carousel1.jpg";
-import carousel2 from "../media/images/carousel2.jpg";
-import carousel3 from "../media/images/carousel3.jpg";
+import carousel1 from "../../media/images/carousel1.jpg";
+import carousel2 from "../../media/images/carousel2.jpg";
+import carousel3 from "../../media/images/carousel3.jpg";
 
 const Slideshow = () => {
     const imageUrls = [carousel1, carousel2, carousel3];

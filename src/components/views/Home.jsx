@@ -1,7 +1,7 @@
 import React from 'react'
-import Slideshow from './Slideshow'
-import arrow from '../media/images/up-left-arrow.png'
-import bird from '../media/images/bird.png'
+import Slideshow from '../etc/Slideshow'
+import arrow from '../../media/images/up-left-arrow.png'
+import bird from '../../media/images/bird.png'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
 
@@ -50,9 +50,9 @@ const Home = () => {
                             <p className='text-4xl'>project</p>
                             <p className='text-4xl'>04</p>
                         </div>
-                    </div>   
+                    </div>
                 </div>
-                
+
                 <div className='text-right space-y-12'>
                     <p className='text-8xl text-newPurple font-bold'>All about us</p>
                     <p className='text-2xl text-newPurple'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -62,7 +62,7 @@ const Home = () => {
 
             </div>
         </div>
-        
+
     )
 }
 
