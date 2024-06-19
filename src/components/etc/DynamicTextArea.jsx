@@ -1,9 +1,18 @@
 import {  useRef } from "react"
 import { useAutosizeTextArea } from "./useAutosizeTextArea"
 
-export function DynamicTextArea({ placeholder = '', value = '', onChange, styles='', rows }) {
+export function DynamicTextArea({ value = '', onChange, styles = '', rows, onKeyUp, index }) {
+    let pressDownEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
+    if (onKeyUp) {
+        pressDownEnter = onKeyUp
+    }
     const textAreaRef = useRef(null)
     useAutosizeTextArea(textAreaRef.current, value)
+
 
     return (
         <>
@@ -11,6 +20,7 @@ export function DynamicTextArea({ placeholder = '', value = '', onChange, styles
                 ref={textAreaRef}
                 className={styles}
                 onChange={onChange}
+                onKeyUp={(e) => { pressDownEnter(e, index) }}
                 value={value}
                 rows={rows}
                 placeholder={"Type something..."}

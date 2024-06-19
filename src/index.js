@@ -16,6 +16,8 @@ import YourBlogs from './components/userActions/YourBlogs.jsx';
 import EditPost from './components/userActions/EditPost.jsx';
 import EditPreview from './components/userActions/EditPreview.jsx';
 import Collaboration from './components/userActions/Collaboration.jsx';
+import YourCollaborations from './components/userActions/YourCollaborations.jsx';
+import CreateCollaboration from './components/userActions/CreateCollaboration.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -50,6 +52,8 @@ root.render(
             <Route path='edit-post/:postId' element={<EditPost />} />
             <Route path='edit-profile' element={<EditProfile />} />
             <Route path="/collaboration" element={<Collaboration />} />
+            <Route path='/your-collaborations' element={<YourCollaborations />} />
+            <Route path='create-collaboration' element={<CreateCollaboration />} />
           </Route>
         </Route>
       </Routes>

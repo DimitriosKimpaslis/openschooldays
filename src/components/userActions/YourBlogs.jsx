@@ -53,7 +53,7 @@ const YourBlogs = () => {
             </div>
             <div className='flex justify-center'>
                 <div className='flex flex-col items-center gap-5 max-w-[1200px]'>
-                    <h1 className='text-5xl text-center'>Edit Your Blogs</h1>
+                    <h1 className='text-5xl text-center border-yellow-400 border-8 border-dashed p-4'>Edit Your Blogs</h1>
                     {loading ?
                         <div className='w-full h-[500px] flex justify-center items-center'>
                             <CircularProgress />
