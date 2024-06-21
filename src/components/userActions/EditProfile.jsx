@@ -46,6 +46,10 @@ const EditProfile = () => {
 
 
     const saveChanges = async () => {
+        if (tempUserDetails.name === '' || tempUserDetails.surname === '' || tempUserDetails.description === '') {
+            alert('Please fill in all the fields')
+            return
+        }
         const { data, error } = await supabase
             .from('usersInfo')
             .update([

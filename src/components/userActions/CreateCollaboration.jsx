@@ -1,59 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import TitleIcon from '@mui/icons-material/Title';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import ImageIcon from '@mui/icons-material/Image';
 import { Tooltip } from '@mui/material';
 import { DynamicTextArea } from '../etc/DynamicTextArea';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../client';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { UserContext } from '../../App';
 
 const CreateCollaboration = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })
     const [thumbnail, setThumbnail] = useState('https://placehold.co/600x400/png')
     const [content, setContent] = useState([])
 
+    const { user } = useContext(UserContext)
+
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const content = localStorage.getItem('content');
-        const title = localStorage.getItem('title');
-        const thumbnail = localStorage.getItem('thumbnail');
-        if (content) {
-            setContent(JSON.parse(content))
-        }
-        if (title) {
-            setTitle(JSON.parse(title))
-        }
-        if (thumbnail) {
-            setThumbnail(thumbnail)
-        }
-    }, [])
-
-
-
-    useEffect(() => {
-        if (content.length > 0) {
-            localStorage.setItem('content', JSON.stringify(content));
-        }
-    }, [content])
-
-    useEffect(() => {
-        if (title.value.length > 0) {
-            localStorage.setItem('title', JSON.stringify(title));
-        }
-    }, [title])
-
-    useEffect(() => {
-        if (thumbnail !== 'https://placehold.co/600x400/png') {
-            localStorage.setItem('thumbnail', thumbnail);
-        }
-    }, [thumbnail])
-
-
 
     const handleUploadImage = async (e, index) => {
         let file = e.target.files[0];
@@ -176,11 +142,48 @@ const CreateCollaboration = () => {
         setContent(updatedContent)
     }
 
-    const goToPreview = () => {
+    const upload = async () => {
         if (title.value.length === 0 || content.length === 0) {
             alert('Please fill in the title as well as adding some content')
         } else {
-            console.log("upload to server")
+            const userEmail = user.email;
+            const userUid = user.id;
+            const getUserName = async () => {
+                const { data, error } = await supabase
+                    .from('usersInfo')
+                    .select('name, surname')
+                    .eq('uid', userUid)
+                if (data) {
+                    return data[0].name + ' ' + data[0].surname
+                } else {
+                    console.log(error)
+                }
+            }
+            const userName = await getUserName();
+
+            const idea = {
+                title: title.value,
+                thumbnail: thumbnail,
+                content: content,
+            }
+            const dataToUpload = {
+                idea: idea,
+                status: 'inactive',
+                created_by_email: userEmail,
+                created_by_name: userName,
+            }
+
+            const insertData = async () => {
+                const { error } = await supabase
+                    .from('collaboration')
+                    .insert([dataToUpload])
+                if (!error) {
+                    navigate('/collaboration')
+                } else {
+                    console.log(error)
+                }
+            }
+            insertData()
         }
     }
 
@@ -291,7 +294,7 @@ const CreateCollaboration = () => {
                         </div>
 
                     </div>
-                    <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={goToPreview}>Preview</button>
+                    <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={upload}>Upload</button>
                 </form>
             </div>
         </div>

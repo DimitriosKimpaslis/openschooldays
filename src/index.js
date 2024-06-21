@@ -18,6 +18,7 @@ import EditPreview from './components/userActions/EditPreview.jsx';
 import Collaboration from './components/userActions/Collaboration.jsx';
 import YourCollaborations from './components/userActions/YourCollaborations.jsx';
 import CreateCollaboration from './components/userActions/CreateCollaboration.jsx';
+import CollaborationPage from './components/userActions/CollaborationPage.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -54,6 +55,7 @@ root.render(
             <Route path="/collaboration" element={<Collaboration />} />
             <Route path='/your-collaborations' element={<YourCollaborations />} />
             <Route path='create-collaboration' element={<CreateCollaboration />} />
+            <Route path='collaboration-page/:status/:id' element={<CollaborationPage />} />
           </Route>
         </Route>
       </Routes>
