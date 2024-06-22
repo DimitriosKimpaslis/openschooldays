@@ -51,8 +51,7 @@ const YourBlogs = () => {
         <div>
             <div className='bg-black h-[200px]'>
             </div>
-            <div className='flex justify-center'>
-                <div className='flex flex-col items-center gap-5 max-w-[1200px]'>
+                <div className='container mx-auto flex flex-col items-center gap-5'>
                     <h1 className='text-5xl text-center border-yellow-400 border-8 border-dashed p-4'>Edit Your Blogs</h1>
                     {loading ?
                         <div className='w-full h-[500px] flex justify-center items-center'>
@@ -80,7 +79,6 @@ const YourBlogs = () => {
                         {lastPageExists && <button className='bg-newSomon hover:bg-newPink text-white px-4 py-2 rounded-full' onClick={goToNextPage}>Next Page</button>}
                     </div>
                 </div>
-            </div>
         </div>
     )
 }

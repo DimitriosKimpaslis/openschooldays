@@ -44,8 +44,7 @@ const Blogs = () => {
         <div>
             <div className='bg-black h-[200px]'>
             </div>
-            <div className='flex justify-center'>
-                <div className='flex flex-col items-center gap-5 max-w-[1200px]'>
+                <div className='container mx-auto flex flex-col items-center gap-5'>
                     <h1 className='text-5xl text-center'>Blogs</h1>
                     {loading ?
                         <div className='w-full h-[500px] flex justify-center items-center'>
@@ -58,7 +57,7 @@ const Blogs = () => {
                                 const readableDate = new Date(post.created_at).toDateString()
                                 return (
                                     <div key={index} className='shadow-lg p-4 cursor-pointer overflow-hidden w-[400px] h-[450px] space-y-4' onClick={() => navigate('/blog-post/' + post.id)}>
-                                        <img src={post.thumbnail} alt={post.title + " image"} className='w-full h-[200px] object-cover' />
+                                        <img src={post.thumbnail} alt={post.title + " image"} className='w-full h-[200px] object-contain bg-black' />
                                         <p className='text-2xl font-semibold'>{post.title}</p>
                                         <p className='text-gray-500'>{description && description.slice(0, 100) + '...'}</p>
                                         <div className='flex justify-between items-center'>
@@ -74,7 +73,6 @@ const Blogs = () => {
                         {lastPageExists && <button className='bg-newSomon hover:bg-newPink text-white px-4 py-2 rounded-full' onClick={goToNextPage}>Next Page</button>}
                     </div>
                 </div>
-            </div>
         </div>
     )
 }

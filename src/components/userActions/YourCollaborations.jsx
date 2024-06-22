@@ -23,38 +23,41 @@ const YourCollaborations = () => {
         }
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         getCollaborations()
     }
         , [])
-    
+
     return (
         <div>
             <div className='h-[200px] bg-black'></div>
-            <p className='text-8xl text-center'>Collaboration</p>
-            <div className='flex justify-end items-center px-4'>
-                <div className='flex flex-col items-center hover:text-gray-500 cursor-pointer' onClick={() => navigate('/create-collaboration')}>
-                    <p className='text-xl font-bold'>New Collaboration Idea</p>
-                    <AddCircleIcon className='text-8xl' fontSize='' />
-                </div>
-            </div>
-            <div className='flex justify-center'>
-                <div className='w-[80%]'>
-                    <div className='w-full'>
-                        <div className='flex items-center gap-1 border-b-2 border-black'>
-                            <p className='text-2xl'>Your Active Collaborations</p>
-                            <p className='text-xl text-gray-500'>Click on a collaboration to view more details</p>
-
+                <div className='container mx-auto space-y-1'>
+                    <p className='text-8xl text-center'>Collaboration</p>
+                    <div className='flex justify-end items-center px-4'>
+                        <div className='flex flex-col items-center hover:text-gray-500 cursor-pointer' onClick={() => navigate('/create-collaboration')}>
+                            <p className='text-xl font-bold'>New Collaboration Idea</p>
+                            <AddCircleIcon className='text-8xl' fontSize='' />
                         </div>
                     </div>
-                    <div className='w-full'>
-                        <div className='flex items-center gap-1 border-b-2 border-black'>
-                            <p className='text-2xl'>Your Inactive Collaborations</p>
+                    <div className='flex justify-center'>
+                        <div className='w-[80%]'>
+                            <div className='w-full'>
+                                <div className='flex items-center gap-1 border-b-2 border-black'>
+                                    <p className='text-2xl'>Your Active Collaborations</p>
+                                    <p className='text-xl text-gray-500'>Click on a collaboration to view more details</p>
+
+                                </div>
+                            </div>
+                            <div className='w-full'>
+                                <div className='flex items-center gap-1 border-b-2 border-black'>
+                                    <p className='text-2xl'>Your Inactive Collaborations</p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
-            </div>
         </div>
     )
 }

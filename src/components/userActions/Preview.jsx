@@ -54,25 +54,26 @@ const Preview = () => {
   return (
     <div>
       <div className='h-[200px] bg-black'></div>
-      <div className='flex flex-col items-center gap-5'>
-        <h1 className='text-5xl font-bold'>{title}</h1>
-        {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[600px] h-[400px] object-cover' />}
-        <div>
-          {content.map((item, index) => {
-            if (item.type === 'title') {
-              return <p key={index} className='text-3xl font-semibold'>{item.value}</p>
-            }
-            if (item.type === 'paragraph') {
-              return <p key={index} className='text-xl'>{item.value}</p>
-            }
-            if (item.type === 'image') {
-              return <img key={index} src={item.value} alt={title} className='w-[600px] h-[400px] object-cover' />
-            }
-            return null
-          })}
+        <div className='container mx-auto flex flex-col items-center gap-5'>
+          <h1 className='text-5xl font-bold'>{title}</h1>
+          {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[600px] h-[400px] object-cover' />}
+          <div>
+            {content.map((item, index) => {
+              if (item.type === 'title') {
+                return <p key={index} className='text-3xl font-semibold'>{item.value}</p>
+              }
+              if (item.type === 'paragraph') {
+                return <p key={index} className='text-xl'>{item.value}</p>
+              }
+              if (item.type === 'image') {
+                return <img key={index} src={item.value} alt={title} className='w-[600px] h-[400px] object-cover' />
+              }
+              return null
+            })}
+          </div>
+          <button onClick={handleUpload} className='bg-blue-500 text-white px-5 py-2 rounded-md'>Publish</button>
         </div>
-        <button onClick={handleUpload} className='bg-blue-500 text-white px-5 py-2 rounded-md'>Publish</button>
-      </div>
+    
     </div>
   )
 }

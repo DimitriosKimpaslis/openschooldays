@@ -31,8 +31,7 @@ const BlogPost = () => {
                 <div className='w-full h-[500px] flex justify-center items-center'>
                     <CircularProgress />
                 </div> :
-                <div className='flex justify-center'>
-                    <div className='flex flex-col items-center gap-5 max-w-[800px]'>
+                    <div className='container mx-auto flex flex-col items-center gap-5 max-w-[800px]'>
                         <h1 className='text-5xl font-bold'>{post.title}</h1>
                         {post.thumbnail && <img src={post.thumbnail} alt={post.title + " image"} className='w-[800px] h-[500px] object-contain' />}
                         <div>
@@ -51,7 +50,6 @@ const BlogPost = () => {
                         </div>
                         <BlogFooter user_uid={post.author_uid} />
                     </div>
-                </div>
             }
         </div>
     )

@@ -175,101 +175,102 @@ const BlogCreation = () => {
     return (
         <div>
             <div className='h-[200px] bg-black'></div>
-            <div className='flex flex-col items-center text-2xl'>
-                <p className='text-7xl font-bold my-20'>Blog Creation</p>
-                <form className=' flex flex-col gap-3'>
-                    <div className='space-y-5'>
-                        <p className=' text-5xl font-extralight'>Title:</p>
-                        <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
-                    </div>
-                    <p className='  text-5xl font-extralight'>Thumbnail:</p>
-                    <label className='w-fit relative'>
-                        <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
-                        <div className='flex items-center'>
-                            {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
-                            <div className='flex items-center gap-1'>
-                                {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
+                <div className='container mx-auto flex flex-col items-center text-2xl '>
+                    <p className='text-7xl font-bold my-20'>Blog Creation</p>
+                    <form className='flex flex-col gap-3'>
+                        <div className='space-y-5'>
+                            <p className=' text-5xl font-extralight'>Title:</p>
+                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
+                        </div>
+                        <p className='  text-5xl font-extralight'>Thumbnail:</p>
+                        <label className='w-fit relative'>
+                            <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                            <div className='flex items-center'>
+                                {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                <div className='flex items-center gap-1'>
+                                    {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                    <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
+                                </div>
                             </div>
-                        </div>
-                        <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
-                        <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
-                            <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                        </div>
-                    </label>
-                    <div>
-                        <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
-                        <div className='flex flex-col gap-5 mb-10 h-fit'>
-                            {content.map((field, index) => {
-                                switch (field.type) {
-                                    case 'title':
-                                        return (
-                                            <div className='flex items-center' key={index}>
-                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
-                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                            </div>
-                                        )
-                                    case 'paragraph':
-                                        return (
-                                            <div className='flex items-center' key={index}>
-                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
-                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                            </div>
-                                        )
-                                    case 'image':
-                                        let imageSelected = false;
-                                        if (content[index].value !== 'https://placehold.co/600x400/png') {
-                                            imageSelected = true;
-                                        }
-                                        return (
-                                            <div key={index} className='flex items-center'>
-                                                <label className='w-fit relative'>
-                                                    <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
-                                                    <div className='flex items-center'>
-                                                        {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
-                                                        <div className='flex items-center gap-1'>
-                                                            {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                                            <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
+                            <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
+                            <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                                <FileUploadIcon className='text-white text-7xl' fontSize='' />
+                            </div>
+                        </label>
+                        <div>
+                            <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
+                            <div className='flex flex-col gap-5 mb-10 h-fit'>
+                                {content.map((field, index) => {
+                                    switch (field.type) {
+                                        case 'title':
+                                            return (
+                                                <div className='flex items-center' key={index}>
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                                </div>
+                                            )
+                                        case 'paragraph':
+                                            return (
+                                                <div className='flex items-center' key={index}>
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                                </div>
+                                            )
+                                        case 'image':
+                                            let imageSelected = false;
+                                            if (content[index].value !== 'https://placehold.co/600x400/png') {
+                                                imageSelected = true;
+                                            }
+                                            return (
+                                                <div key={index} className='flex items-center'>
+                                                    <label className='w-fit relative'>
+                                                        <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                                                        <div className='flex items-center'>
+                                                            {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                                            <div className='flex items-center gap-1'>
+                                                                {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                                                <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
-                                                    <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
-                                                        <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                                                    </div>
-                                                </label>
-                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                            </div>
+                                                        <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
+                                                        <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
+                                                            <FileUploadIcon className='text-white text-7xl' fontSize='' />
+                                                        </div>
+                                                    </label>
+                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                                </div>
 
-                                        )
-                                    default:
-                                        return null
-                                }
-                            })}
-                        </div>
-                        <div className='flex space-x-1 justify-center'>
-                            <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-3 p-1 gap-1'>
-                                <Tooltip title={<p className='text-base'>Title</p>}>
-                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer ' onClick={() => addNewField('title')}>
-                                        <TitleIcon />
-                                    </div>
-                                </Tooltip>
-                                <Tooltip title={<p className='text-base'>Paragraph</p>}>
-                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('paragraph')}>
-                                        <FormatAlignJustifyIcon />
-                                    </div>
-                                </Tooltip>
-                                <Tooltip title={<p className='text-base'>Image</p>}>
-                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
-                                        <ImageIcon />
-                                    </div>
-                                </Tooltip>
+                                            )
+                                        default:
+                                            return null
+                                    }
+                                })}
                             </div>
-                        </div>
+                            <div className='flex space-x-1 justify-center'>
+                                <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-3 p-1 gap-1'>
+                                    <Tooltip title={<p className='text-base'>Title</p>}>
+                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer ' onClick={() => addNewField('title')}>
+                                            <TitleIcon />
+                                        </div>
+                                    </Tooltip>
+                                    <Tooltip title={<p className='text-base'>Paragraph</p>}>
+                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('paragraph')}>
+                                            <FormatAlignJustifyIcon />
+                                        </div>
+                                    </Tooltip>
+                                    <Tooltip title={<p className='text-base'>Image</p>}>
+                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
+                                            <ImageIcon />
+                                        </div>
+                                    </Tooltip>
+                                </div>
+                            </div>
 
-                    </div>
-                    <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={goToPreview}>Preview</button>
-                </form>
-            </div>
+                        </div>
+                        <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={goToPreview}>Preview</button>
+                    </form>
+                </div>
+
         </div>
 
     )

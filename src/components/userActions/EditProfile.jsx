@@ -105,7 +105,7 @@ const EditProfile = () => {
             <div className='h-[200px] bg-black'></div>
             <div className='flex justify-center'>
                 {edit ?
-                    <div className='flex flex-col justify-center gap-3 relative p-4'>
+                    <div className='container flex flex-col justify-center gap-3 relative p-4'>
                         <div className='flex gap-4 items-center justify-center'>
                             <p className='text-center text-3xl p-4 border-yellow-400 border-8 border-dashed'>Editing Profile Page</p>
                         </div>
@@ -141,8 +141,7 @@ const EditProfile = () => {
                     </div>
 
                     :
-
-                    <div className='flex flex-col justify-center'>
+                    <div className='container flex flex-col justify-center'>
                         <div className='flex gap-4 items-center justify-center'>
                             <p className='text-center text-3xl my-6'>Profile Page</p>
                             <Tooltip title="Edit Profile">
@@ -154,6 +153,7 @@ const EditProfile = () => {
                         <p>Surname: {surname ? surname : "Empty..."}</p>
                         <p>Description: {description ? description : "Empty..."}</p>
                     </div>
+
 
                 }
             </div>
