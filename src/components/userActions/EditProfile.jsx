@@ -103,26 +103,29 @@ const EditProfile = () => {
     return (
         <div >
             <div className='h-[200px] bg-black'></div>
-            <div className='flex justify-center'>
+            <div className='flex justify-center items-center'>
                 {edit ?
-                    <div className='container flex flex-col justify-center gap-3 relative p-4'>
+                    <div className='container flex flex-col gap-3 relative p-4'>
                         <div className='flex gap-4 items-center justify-center'>
                             <p className='text-center text-3xl p-4 border-yellow-400 border-8 border-dashed'>Editing Profile Page</p>
                         </div>
-                        <label className='w-fit h-fit relative'>
-                            <img src={tempUserDetails.image} alt='imagePost' className='w-[500px] h-[500px] object-cover rounded-full' />
-                            <div className='flex items-center'>
-                                {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? null : <FileUploadIcon className='relative top-[1px]' />}
-                                <div className='flex items-center gap-1'>
-                                    {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                    <span>{tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? "Image Uploaded" : "No image selected"}</span>
+                        <div className='flex justify-center'>
+                            <label className='w-fit h-fit relative'>
+                                <img src={tempUserDetails.image} alt='imagePost' className='w-[500px] h-[500px] object-cover rounded-full' />
+                                <div className='flex items-center'>
+                                    {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                    <div className='flex items-center gap-1'>
+                                        {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                        <span>{tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? "Image Uploaded" : "No image selected"}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <input onChange={(e) => handleImageUpload(e)} type='file' className='hidden' />
-                            <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
-                                <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                            </div>
-                        </label>
+                                <input onChange={(e) => handleImageUpload(e)} type='file' className='hidden' />
+                                <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                                    <FileUploadIcon className='text-white text-7xl' fontSize='' />
+                                </div>
+                            </label>
+                        </div>
+
                         <p className='font-bold'>Name:</p>
                         <input type='text' placeholder='Empty..' value={tempUserDetails.name} onChange={(e) => setTempUserDetails({ ...tempUserDetails, name: e.target.value })} className='border border-black p-2' />
                         <p className='font-bold'>Surname:</p>
@@ -141,17 +144,21 @@ const EditProfile = () => {
                     </div>
 
                     :
-                    <div className='container flex flex-col justify-center'>
+                    <div className='container flex flex-col items-center'>
+
                         <div className='flex gap-4 items-center justify-center'>
                             <p className='text-center text-3xl my-6'>Profile Page</p>
                             <Tooltip title="Edit Profile">
                                 <EditIcon className='relative top-[1px] hover:text-gray-600 cursor-pointer text-2xl' fontSize='' onClick={() => setEdit(true)} />
                             </Tooltip>
                         </div>
-                        <img src={image} className='w-[400px] h-[400px] rounded-full object-cover' alt="a person" />
-                        <p>Name: {name ? name : "Empty..."}</p>
-                        <p>Surname: {surname ? surname : "Empty..."}</p>
-                        <p>Description: {description ? description : "Empty..."}</p>
+                        <div className='text-2xl space-y-3'>
+                            <img src={image} className='w-[400px] h-[400px] rounded-full object-cover mb-10' alt="a person" />
+                            <p>Name: {name ? name : "Empty..."}</p>
+                            <p>Surname: {surname ? surname : "Empty..."}</p>
+                            <p>Description: {description ? description : "Empty..."}</p>
+                        </div>
+
                     </div>
 
 

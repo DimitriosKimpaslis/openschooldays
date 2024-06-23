@@ -146,7 +146,6 @@ const CreateCollaboration = () => {
         if (title.value.length === 0 || content.length === 0) {
             alert('Please fill in the title as well as adding some content')
         } else {
-            const userEmail = user.email;
             const userUid = user.id;
             const getUserName = async () => {
                 const { data, error } = await supabase
@@ -169,7 +168,7 @@ const CreateCollaboration = () => {
             const dataToUpload = {
                 idea: idea,
                 status: 'inactive',
-                created_by_email: userEmail,
+                created_by_uid: userUid,
                 created_by_name: userName,
             }
 

@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../../client'
 import SettingsIcon from '@mui/icons-material/Settings';
+import ProfileCard from '../etc/ProfileCard';
+import { UserContext } from '../../App';
 
 const CollaborationPage = () => {
-    const { id, status } = useParams()
+    const navigate = useNavigate()
+
+    const { user } = useContext(UserContext)
+    const { id, status } = useParams()  
     const [collaboration, setCollaboration] = useState({})
     const [ticketColor, setTicketColor] = useState('bg-gray-500')
     const getCollaborationData = async () => {
@@ -17,7 +22,6 @@ const CollaborationPage = () => {
             return
         }
         setCollaboration(data[0])
-        console.log(data[0])
     }
 
     useEffect(() => {
@@ -41,6 +45,30 @@ const CollaborationPage = () => {
                 return 'bg-gray-500'
         }
     }
+
+    const getAccessStatus = () => { 
+        const user_uid = user.id;
+        let memberUids = [];
+        if (collaboration.executed_by_uids !== null) {
+            collaboration.executed_by_uids.forEach((item) => {
+            memberUids.push(item);
+            })
+        }
+        memberUids.push(collaboration.created_by_uid);
+        if(memberUids.includes(user_uid)) {
+            return true;
+        }
+        return false;
+    }
+
+    const goToEditPage = () => {
+        if(getAccessStatus()) {
+            navigate("/collaboration-page-edit/" + id)
+        } else {
+            alert("You don't have access to this page, please contact the creator of the collaboration or the members of the collaboration to get access.")
+        }
+    }
+
 
 
     return (
@@ -116,20 +144,17 @@ const CollaborationPage = () => {
                                 return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
                             }
                             if (item.type === 'image') {
-                                return <img key={index} src={item.value} alt={item.title} className='w-[800px] h-[500px] object-cover' />
+                                return <img key={index} src={item.value} alt={item.title} className='w-full h-[600px] object-left object-contain' />
                             }
                             return null
                         })}
                     </div>
                 </div>
-                <div className='space-y-2'>
+                <div className='space-y-4'>
                     <p className='text-2xl border-b-2 border-black'>Created at <span className='text-xl italic'>23/08/2015</span> By:</p>
-                    <div className='flex flex-col w-fit items-center gap-1'>
-                        <img src='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' alt='member' className='w-20 h-20 object-cover rounded-full' />
-                        <p className='text-lg max-w-32  text-center'>Dora Bakogianni</p>
-                    </div>
+                    <ProfileCard img='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' name='Dora' surname='Bakogianni' description={"Lorem ipsum etc that what it means to fight"}/>
                 </div> 
-                <div className={"absolute flex items-center gap-2 top-0 right-0 p-2 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={() => console.log('edit')}>
+                <div className={"absolute flex items-center gap-2 top-0 right-0 p-2 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={goToEditPage}>
                     <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1,collaboration.status.length)}</p>
                     <SettingsIcon className='relative top-[1px]' />
                 </div>
