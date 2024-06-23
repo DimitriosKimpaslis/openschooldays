@@ -174,7 +174,6 @@ const BlogCreation = () => {
 
     return (
         <div>
-            <div className='h-[200px] bg-black'></div>
                 <div className='container mx-auto flex flex-col items-center text-2xl '>
                     <p className='text-7xl font-bold my-20'>Blog Creation</p>
                     <form className='flex flex-col gap-3'>

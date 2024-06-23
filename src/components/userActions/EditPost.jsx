@@ -175,7 +175,6 @@ const EditPost = () => {
 
     return (
         <div>
-            <div className='h-[200px] bg-black'></div>
                 <div className='container mx-auto flex flex-col items-center text-2xl'>
                     <p className='text-7xl font-bold my-20 p-4 border-yellow-400 border-8 border-dashed'>Editing Blog</p>
                     <form className=' flex flex-col gap-3'>

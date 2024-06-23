@@ -42,8 +42,7 @@ const Blogs = () => {
 
     return (
         <div>
-            <div className='bg-black h-[200px]'>
-            </div>
+
                 <div className='container mx-auto flex flex-col items-center gap-5'>
                     <h1 className='text-5xl text-center'>Blogs</h1>
                     {loading ?

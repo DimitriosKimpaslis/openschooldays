@@ -42,10 +42,10 @@ const Header = () => {
                 <li className='font-semibold hover:text-gray-400 transition-colors duration-400'><NavLink to={'/'}>HOME</NavLink></li>
                 <li className='relative font-semibold parent-li transition-colors duration-400'><NavLink to={'/post'}>PROJECTS <KeyboardArrowDownIcon className='bottom-[2px] relative' /></NavLink>
                     <ul className='absolute w-40 space-y-2 hidden'>
-                        <li className='hover:text-white'><NavLink to={'/post'}>PROJECT 1</NavLink></li>
-                        <li className='hover:text-white'><NavLink to={'/post'}>PROJECT 2</NavLink></li>
-                        <li className='hover:text-white'><NavLink to={'/post'}>PROJECT 3</NavLink></li>
-                        <li className='hover:text-white'><NavLink to={'/post'}>PROJECT 4</NavLink></li>
+                        <li className='hover:text-black text-gray-500 '><NavLink to={'/post'}>PROJECT 1</NavLink></li>
+                        <li className='hover:text-black text-gray-500'><NavLink to={'/post'}>PROJECT 2</NavLink></li>
+                        <li className='hover:text-black text-gray-500 '><NavLink to={'/post'}>PROJECT 3</NavLink></li>
+                        <li className='hover:text-black text-gray-500'><NavLink to={'/post'}>PROJECT 4</NavLink></li>
                     </ul>
                 </li>
                 <li className='font-semibold hover:text-gray-400 transition-colors duration-400'><NavLink to={'/reviews'}>ABOUT</NavLink></li>

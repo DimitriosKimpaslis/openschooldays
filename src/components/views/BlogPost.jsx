@@ -26,7 +26,6 @@ const BlogPost = () => {
 
     return (
         <div>
-            <div className='h-[200px] bg-black'></div>
             {loading ?
                 <div className='w-full h-[500px] flex justify-center items-center'>
                     <CircularProgress />

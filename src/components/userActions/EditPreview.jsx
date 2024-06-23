@@ -48,7 +48,6 @@ const EditPreview = () => {
 
     return (
         <div>
-            <div className='h-[200px] bg-black'></div>
                 <div className='container mx-auto flex flex-col items-center gap-5'>
                     <h1 className='text-5xl font-bold'>{title}</h1>
                     {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[600px] h-[400px] object-cover' />}

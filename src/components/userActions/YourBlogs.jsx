@@ -49,8 +49,7 @@ const YourBlogs = () => {
 
     return (
         <div>
-            <div className='bg-black h-[200px]'>
-            </div>
+
                 <div className='container mx-auto flex flex-col items-center gap-5'>
                     <h1 className='text-5xl text-center border-yellow-400 border-8 border-dashed p-4'>Edit Your Blogs</h1>
                     {loading ?

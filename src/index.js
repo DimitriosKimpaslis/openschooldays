@@ -55,7 +55,15 @@ root.render(
             <Route path="/collaboration" element={<Collaboration />} />
             <Route path='create-collaboration' element={<CreateCollaboration />} />
             <Route path='collaboration-page/:status/:id' element={<CollaborationPage />} />
-            <Route path='collaboration-page-edit/:id' element={<CollaborationPageEdit />} />
+            <Route path='collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
+              <Route index element={<h1>Description</h1>} />
+              <Route path='settings' element={<h1>Settings</h1>} />
+              <Route path='profile' element={<h1>Profile</h1>} />
+              <Route path='members' element={<h1>Members</h1>} />
+              <Route path='posts' element={<h1>Posts</h1>} />
+              <Route path='alerts' element={<h1>Alerts</h1>} />
+              <Route path='delete' element={<h1>Delete</h1>} />
+            </Route>
           </Route>
         </Route>
       </Routes>

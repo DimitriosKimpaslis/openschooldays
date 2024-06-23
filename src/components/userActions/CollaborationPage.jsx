@@ -73,7 +73,6 @@ const CollaborationPage = () => {
 
     return (
         <div>
-            <div className='bg-black h-[200px] mb-5'></div>
             <div className='container mx-auto space-y-4 relative'>
 
 

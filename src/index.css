@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
 .parent-li:hover>a {
     color: gray;
 }
@@ -17,4 +26,8 @@ ul.primary li:hover ul {
 
 div.profileCard:hover div.profilePopup {
     display: block;
+}
+
+.bg-gradient {
+    background: linear-gradient(to bottom, #c83474 0%,#f0645c 40%, #f8bc84 100%);
 }

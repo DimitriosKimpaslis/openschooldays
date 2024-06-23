@@ -5,6 +5,8 @@ import { CircularProgress, Tooltip } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const EditProfile = () => {
     const { user } = useContext(UserContext)
@@ -12,9 +14,13 @@ const EditProfile = () => {
     const [surname, setSurname] = useState('')
     const [image, setImage] = useState('https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg')
     const [description, setDescription] = useState('')
+    const [facebook, setFacebook] = useState('')
+    const [email, setEmail] = useState('')
+    const [telephone, setTelephone] = useState('')
+    const [instagram, setInstagram] = useState('')
     const [loading, setLoading] = useState(true)
 
-    const [tempUserDetails, setTempUserDetails] = useState({ name: '', surname: '', image: '', description: '' })
+    const [tempUserDetails, setTempUserDetails] = useState({ facebook: "", instagram: "", email: "", telephone: "", image: '', description: '' })
 
     const [edit, setEdit] = useState(false)
 
@@ -35,7 +41,11 @@ const EditProfile = () => {
             setImage(data[0].image)
         }
         setDescription(data[0].description)
-        setTempUserDetails({ name: data[0].name, surname: data[0].surname, image: data[0].image !== null ? data[0].image : 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg', description: data[0].description })
+        setFacebook(data[0].facebook)
+        setInstagram(data[0].instagram)
+        setEmail(data[0].email)
+        setTelephone(data[0].telephone)
+        setTempUserDetails({ name: data[0].name, surname: data[0].surname, image: data[0].image !== null ? data[0].image : 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg', description: data[0].description, facebook: data[0].facebook, instagram: data[0].instagram, email: data[0].email, telephone: data[0].telephone})
         setLoading(false)
     }
 
@@ -46,18 +56,20 @@ const EditProfile = () => {
 
 
     const saveChanges = async () => {
-        if (tempUserDetails.name === '' || tempUserDetails.surname === '' || tempUserDetails.description === '') {
-            alert('Please fill in all the fields')
+        if (tempUserDetails.description === '') {
+            alert('Please fill in the description field')
             return
         }
         const { data, error } = await supabase
             .from('usersInfo')
             .update([
                 {
-                    name: tempUserDetails.name,
-                    surname: tempUserDetails.surname,
                     description: tempUserDetails.description,
-                    image: tempUserDetails.image
+                    image: tempUserDetails.image,
+                    facebook: tempUserDetails.facebook,
+                    instagram: tempUserDetails.instagram,
+                    email: tempUserDetails.email,
+                    telephone: tempUserDetails.telephone
                 }
             ])
             .eq('uid', user.id)
@@ -73,7 +85,7 @@ const EditProfile = () => {
 
 
     const cancelChanges = () => {
-        setTempUserDetails({ name: name, surname: surname, image: image, description: description })
+        setTempUserDetails({ name: name, surname: surname, image: image, description: description, facebook: facebook, instagram: instagram, email: email, telephone: telephone})
         setEdit(false)
     }
 
@@ -99,65 +111,92 @@ const EditProfile = () => {
         }
     }
 
+    const openNewTab = (url) => {
+        window
+            .open(url, '_blank')
+            .focus();
+    }
+
 
     return (
         <div >
-            <div className='h-[200px] bg-black'></div>
             <div className='flex justify-center items-center'>
                 {edit ?
-                    <div className='container flex flex-col gap-3 relative p-4'>
-                        <div className='flex gap-4 items-center justify-center'>
-                            <p className='text-center text-3xl p-4 border-yellow-400 border-8 border-dashed'>Editing Profile Page</p>
-                        </div>
-                        <div className='flex justify-center'>
-                            <label className='w-fit h-fit relative'>
-                                <img src={tempUserDetails.image} alt='imagePost' className='w-[500px] h-[500px] object-cover rounded-full' />
-                                <div className='flex items-center'>
-                                    {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? null : <FileUploadIcon className='relative top-[1px]' />}
-                                    <div className='flex items-center gap-1'>
-                                        {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                        <span>{tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? "Image Uploaded" : "No image selected"}</span>
+                    <div className='container flex flex-col items-center relative p-4'>
+                        <div className='space-y-2'>
+                            <div className='flex gap-4 items-center justify-center'>
+                                <p className='text-center text-3xl p-4 border-yellow-400 border-8 border-dashed'>Editing Profile Page</p>
+                            </div>
+                            <div className='flex justify-center'>
+                                <label className='w-fit h-fit relative mb-10'>
+                                    <img src={tempUserDetails.image} alt='imagePost' className='w-[500px] h-[500px] object-cover rounded-full' />
+                                    <div className='flex items-center'>
+                                        {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                        <div className='flex items-center gap-1'>
+                                            {tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                            <span>{tempUserDetails.image !== 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg' ? "Image Uploaded" : "No image selected"}</span>
+                                        </div>
                                     </div>
+                                    <input onChange={(e) => handleImageUpload(e)} type='file' className='hidden' />
+                                    <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                                        <FileUploadIcon className='text-white text-7xl' fontSize='' />
+                                    </div>
+                                </label>
+                            </div>
+
+                            <p className='font-bold'>Facebook:</p>
+                            <div className='flex items-center gap-1'>
+                                <p className='text-sm'>https://www.facebook.com/</p>
+                                <input type='text' placeholder='Empty..' value={tempUserDetails.facebook} onChange={(e) => setTempUserDetails({ ...tempUserDetails, facebook: e.target.value })} className='border border-black p-2 w-full' />
+                                <FacebookIcon className='text-5xl text-blue-800 hover:text-blue-500 cursor-pointer' onClick={() => openNewTab("https://www.facebook.com/".concat(tempUserDetails.facebook))} fontSize='' />
+                            </div>
+                            <p className='font-bold'>Instagram:</p>
+                            <div className='flex items-center gap-1'>
+                                <p className='text-sm'>https://www.instagram.com/</p>
+                                <input type='text' placeholder='Empty..' value={tempUserDetails.instagram} onChange={(e) => setTempUserDetails({ ...tempUserDetails, instagram: e.target.value })} className='border border-black p-2 w-full' />
+                                <InstagramIcon className='text-5xl text-pink-600 hover:text-pink-400 cursor-pointer' onClick={() => openNewTab("https://www.instagram.com/".concat(tempUserDetails.instagram))} fontSize='' />
+                            </div>
+                            <p className='font-bold'>Email:</p>
+                            <input type='text' placeholder='Empty..' value={tempUserDetails.email} onChange={(e) => setTempUserDetails({ ...tempUserDetails, email: e.target.value })} className='border border-black p-2 w-full' />
+                            <p className='font-bold'>Telephone:</p>
+                            <input type='number' placeholder='Empty..' value={tempUserDetails.telephone} onChange={(e) => setTempUserDetails({ ...tempUserDetails, telephone: e.target.value })} className='border border-black p-2 w-full' />
+                            <p className='font-bold'>Description:</p>
+                            <textarea placeholder='Empty..' value={tempUserDetails.description} onChange={(e) => setTempUserDetails({ ...tempUserDetails, description: e.target.value })} className='border border-black p-2 w-full' />
+                            
+                            <div className='flex justify-center gap-3 text-lg'>
+                                <button className='bg-green-500 w-full hover:bg-green-600 text-white font-bold py-2 px-4 rounded' onClick={saveChanges}>Save Changes</button>
+                                <button className='bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={cancelChanges}>Cancel</button>
+                            </div>
+                            {loading &&
+                                <div className='absolute top-0 right-0 bg-gray-200 opacity-70 flex justify-center items-center w-full h-full'>
+                                    <CircularProgress />
                                 </div>
-                                <input onChange={(e) => handleImageUpload(e)} type='file' className='hidden' />
-                                <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
-                                    <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                                </div>
-                            </label>
+                            }
                         </div>
 
-                        <p className='font-bold'>Name:</p>
-                        <input type='text' placeholder='Empty..' value={tempUserDetails.name} onChange={(e) => setTempUserDetails({ ...tempUserDetails, name: e.target.value })} className='border border-black p-2' />
-                        <p className='font-bold'>Surname:</p>
-                        <input type='text' placeholder='Empty..' value={tempUserDetails.surname} onChange={(e) => setTempUserDetails({ ...tempUserDetails, surname: e.target.value })} className='border border-black p-2' />
-                        <p className='font-bold'>Description:</p>
-                        <textarea placeholder='Empty..' value={tempUserDetails.description} onChange={(e) => setTempUserDetails({ ...tempUserDetails, description: e.target.value })} className='border border-black p-2' />
-                        <div className='flex justify-center gap-3 text-lg'>
-                            <button className='bg-green-500 w-full hover:bg-green-600 text-white font-bold py-2 px-4 rounded' onClick={saveChanges}>Save Changes</button>
-                            <button className='bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={cancelChanges}>Cancel</button>
-                        </div>
-                        {loading &&
-                            <div className='absolute top-0 right-0 bg-gray-200 opacity-70 flex justify-center items-center w-full h-full'>
-                                <CircularProgress />
-                            </div>
-                        }
                     </div>
 
                     :
-                    <div className='container flex flex-col items-center'>
+                    <div className='container flex flex-col items-center text-white'>
+                        <div className='bg-neutral-950 px-20 py-4 my-10'>
+                            <div className='flex gap-4 items-center justify-center'>
+                                <p className='text-center text-3xl my-6'>Profile Page</p>
+                                <Tooltip title="Edit Profile">
+                                    <EditIcon className='relative top-[1px] hover:text-gray-600 cursor-pointer text-2xl' fontSize='' onClick={() => setEdit(true)} />
+                                </Tooltip>
+                            </div>
+                            <div className='text-2xl space-y-3'>
+                                <img src={image} className='w-[400px] h-[400px] rounded-full object-cover mb-10' alt="a person" />
+                                <p>Name: {name ? name : "Empty..."}</p>
+                                <p>Surname: {surname ? surname : "Empty..."}</p>
+                                <p>Description: {description ? description : "Empty..."}</p>
+                                <p>Facebook: {facebook ? facebook : "Empty..."}</p>
+                                <p>Instagram: {instagram ? instagram : "Empty..."}</p>
+                                <p>Email: {email ? email : "Empty..."}</p>
+                                <p>Tel: {telephone ? telephone : "Empty..."}</p>
+                            </div>
+                        </div>
 
-                        <div className='flex gap-4 items-center justify-center'>
-                            <p className='text-center text-3xl my-6'>Profile Page</p>
-                            <Tooltip title="Edit Profile">
-                                <EditIcon className='relative top-[1px] hover:text-gray-600 cursor-pointer text-2xl' fontSize='' onClick={() => setEdit(true)} />
-                            </Tooltip>
-                        </div>
-                        <div className='text-2xl space-y-3'>
-                            <img src={image} className='w-[400px] h-[400px] rounded-full object-cover mb-10' alt="a person" />
-                            <p>Name: {name ? name : "Empty..."}</p>
-                            <p>Surname: {surname ? surname : "Empty..."}</p>
-                            <p>Description: {description ? description : "Empty..."}</p>
-                        </div>
 
                     </div>
 

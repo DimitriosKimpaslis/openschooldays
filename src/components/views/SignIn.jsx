@@ -29,7 +29,6 @@ const SignIn = () => {
 
     return (
         <div>
-            <div className='h-[400px] bg-black'></div>
             <div className='container mx-auto flex flex-col items-center gap-5'>
                 <h2>Sign In</h2>
                 <form onSubmit={handleSubmit}>

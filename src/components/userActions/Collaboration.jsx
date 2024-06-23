@@ -6,6 +6,7 @@ import NotificationsPausedIcon from '@mui/icons-material/NotificationsPaused';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../client';
+import CollaborationCard from '../etc/CollaborationCard';
 
 const Collaboration = () => {
     const [activeCollaborations, setActiveCollaborations] = useState([])
@@ -49,7 +50,6 @@ const Collaboration = () => {
 
     return (
         <div>
-            <div className='h-[200px] bg-black mb-10'></div>
             <div className='container mx-auto'>
                 <p className='text-6xl text-center'>Collaboration</p>
                 <div className='flex justify-end items-center px-4'>
@@ -119,13 +119,7 @@ const Collaboration = () => {
                                     :
                                     inactiveCollaborations.map((collaboration, index) => {
                                         return (
-                                            <div className='w-full h-full flex flex-col items-center gap-1 shadow-md hover:shadow-xl cursor-pointer' key={index} onClick={() => navigate('/collaboration-page/' + collaboration.status + "/" + collaboration.id)}>
-                                                <div className='w-full h-64 bg-gray-500'>
-                                                    <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
-                                                </div>
-                                                <p className='text-xl'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                                <p className='text-bg text-gray-600'>Created by {collaboration.created_by_name}</p>
-                                            </div>
+                                            <CollaborationCard collaboration={collaboration} key={index} />
                                         )
                                     })}
                             </div>
