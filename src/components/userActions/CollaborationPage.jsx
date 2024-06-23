@@ -9,9 +9,12 @@ const CollaborationPage = () => {
     const navigate = useNavigate()
 
     const { user } = useContext(UserContext)
-    const { id, status } = useParams()  
+    const { id, status } = useParams()
     const [collaboration, setCollaboration] = useState({})
     const [ticketColor, setTicketColor] = useState('bg-gray-500')
+    const [profiles, setProfiles] = useState([])
+    
+
     const getCollaborationData = async () => {
         const { data, error } = await supabase
             .from('collaboration')
@@ -22,14 +25,53 @@ const CollaborationPage = () => {
             return
         }
         setCollaboration(data[0])
+        console.log(data[0])
+        return data[0]
+    }
+
+    const getProfileData = async (uid) => {
+        const { data, error } = await supabase
+            .from('usersInfo')
+            .select('*')
+            .in('uid', uid)
+        if (error) {
+            console.error('Error fetching profile:', error.message)
+            return
+        }
+        console.log(data[0])
+        return data[0]
     }
 
     useEffect(() => {
         const color = getCollaborationStatusColor()
         setTicketColor(color)
-        getCollaborationData()
-    }
-        , [])
+    
+        const fetchData = async () => {
+            const data = await getCollaborationData();
+            if (data) {
+                console.log('step1');
+                const memberUids = data.executed_by_uids;
+                console.log(memberUids, data.created_by_uid, "step2");
+                if (memberUids) {
+                    console.log('step3')
+                    memberUids.forEach((uid) => {
+                        getProfileData(uid).then((data) => {
+                            setProfiles((prev) => [...prev, data]);
+                        });
+                    });
+                }
+                getProfileData(data.created_by_uid).then((data) => {
+                    setProfiles((prev) => [...prev, data]);
+                });
+            }
+        };
+    
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        console.log(profiles, "profiles")
+    }, [profiles])
 
     const getCollaborationStatusColor = () => {
         switch (status) {
@@ -46,23 +88,23 @@ const CollaborationPage = () => {
         }
     }
 
-    const getAccessStatus = () => { 
+    const getAccessStatus = () => {
         const user_uid = user.id;
         let memberUids = [];
         if (collaboration.executed_by_uids !== null) {
             collaboration.executed_by_uids.forEach((item) => {
-            memberUids.push(item);
+                memberUids.push(item);
             })
         }
         memberUids.push(collaboration.created_by_uid);
-        if(memberUids.includes(user_uid)) {
+        if (memberUids.includes(user_uid)) {
             return true;
         }
         return false;
     }
 
     const goToEditPage = () => {
-        if(getAccessStatus()) {
+        if (getAccessStatus()) {
             navigate("/collaboration-page-edit/" + id)
         } else {
             alert("You don't have access to this page, please contact the creator of the collaboration or the members of the collaboration to get access.")
@@ -151,10 +193,10 @@ const CollaborationPage = () => {
                 </div>
                 <div className='space-y-4'>
                     <p className='text-2xl border-b-2 border-black'>Created at <span className='text-xl italic'>23/08/2015</span> By:</p>
-                    <ProfileCard img='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' name='Dora' surname='Bakogianni' description={"Lorem ipsum etc that what it means to fight"}/>
-                </div> 
+                    <ProfileCard img='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' name='Dora' surname='Bakogianni' description={"Lorem ipsum etc that what it means to fight"} />
+                </div>
                 <div className={"absolute flex items-center gap-2 top-0 right-0 p-2 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={goToEditPage}>
-                    <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1,collaboration.status.length)}</p>
+                    <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1, collaboration.status.length)}</p>
                     <SettingsIcon className='relative top-[1px]' />
                 </div>
             </div>

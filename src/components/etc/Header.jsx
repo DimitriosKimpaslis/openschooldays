@@ -19,7 +19,6 @@ const Header = () => {
             console.error('Error fetching user information:', error.message)
             return
         }
-        console.log(data, 'data')
         if (data[0].image !== null) {
             setImage(data[0].image)
         }
@@ -49,7 +48,6 @@ const Header = () => {
                     </ul>
                 </li>
                 <li className='font-semibold hover:text-gray-400 transition-colors duration-400'><NavLink to={'/reviews'}>ABOUT</NavLink></li>
-
                 <li className='font-semibold hover:text-gray-400 transition-colors duration-400'><NavLink to={'/blog/1'}>BLOG</NavLink></li>
                 <li className='font-semibold hover:text-gray-400 transition-colors duration-400'><NavLink to={'/contact'}>CONTACT US</NavLink></li>
             </ul>

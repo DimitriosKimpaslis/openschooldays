@@ -27,11 +27,6 @@ function App() {
       setUser(JSON.parse(storedUser)); // Retrieve user from local storage
     }
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }
-    , [user]);
   
   const location = useLocation();
 
@@ -51,7 +46,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <div>
         <Header />
-        <div id='header-color' className='h-[180px] bg-gradient'></div>
+        <div id='header-color' className='h-[180px] bg-gradient mb-10'></div>
         <Outlet />
       </div>
     </UserContext.Provider>
