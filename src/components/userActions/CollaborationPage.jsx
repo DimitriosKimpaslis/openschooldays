@@ -13,7 +13,8 @@ const CollaborationPage = () => {
     const [collaboration, setCollaboration] = useState({})
     const [ticketColor, setTicketColor] = useState('bg-gray-500')
     const [profiles, setProfiles] = useState([])
-    
+    const [creatorProfile, setCreatorProfile] = useState()
+
 
     const getCollaborationData = async () => {
         const { data, error } = await supabase
@@ -25,7 +26,6 @@ const CollaborationPage = () => {
             return
         }
         setCollaboration(data[0])
-        console.log(data[0])
         return data[0]
     }
 
@@ -33,45 +33,61 @@ const CollaborationPage = () => {
         const { data, error } = await supabase
             .from('usersInfo')
             .select('*')
-            .in('uid', uid)
+            .eq('uid', uid)
         if (error) {
             console.error('Error fetching profile:', error.message)
             return
         }
-        console.log(data[0])
         return data[0]
+    }
+
+    const findCreatorProfile = (tempProfiles, created_by_uid) => {
+        tempProfiles.forEach((profile) => {
+            if (profile.uid === created_by_uid) {
+                setCreatorProfile(profile)
+            }
+        })
     }
 
     useEffect(() => {
         const color = getCollaborationStatusColor()
         setTicketColor(color)
-    
+
         const fetchData = async () => {
             const data = await getCollaborationData();
+            let created_by_uid = data.created_by_uid;
+            console.log("data:", data)
             if (data) {
-                console.log('step1');
-                const memberUids = data.executed_by_uids;
-                console.log(memberUids, data.created_by_uid, "step2");
-                if (memberUids) {
-                    console.log('step3')
-                    memberUids.forEach((uid) => {
-                        getProfileData(uid).then((data) => {
-                            setProfiles((prev) => [...prev, data]);
-                        });
-                    });
+                let memberUids = [];
+                if (data.executed_by_uids !== null) {
+                    data.executed_by_uids.forEach((item) => {
+                        memberUids.push(item);
+                    })
                 }
-                getProfileData(data.created_by_uid).then((data) => {
-                    setProfiles((prev) => [...prev, data]);
-                });
+                memberUids.push(created_by_uid);
+                let tempProfiles = [];
+                memberUids.forEach((uid) => {
+                    getProfileData(uid).then((data) => {
+                        tempProfiles.push(data);
+                    }
+                    ).then(() => {
+                        findCreatorProfile(tempProfiles, created_by_uid)
+                        setProfiles(tempProfiles)
+                    })
+                })
+
             }
-        };
-    
+        }
         fetchData();
-    }, []);
-    
+    }, [])
+
     useEffect(() => {
-        console.log(profiles, "profiles")
+        console.log("profiles:", profiles)
     }, [profiles])
+
+    useEffect(() => {
+        console.log("creatorProfile:", creatorProfile)
+    }, [creatorProfile])
 
     const getCollaborationStatusColor = () => {
         switch (status) {
@@ -192,8 +208,8 @@ const CollaborationPage = () => {
                     </div>
                 </div>
                 <div className='space-y-4'>
-                    <p className='text-2xl border-b-2 border-black'>Created at <span className='text-xl italic'>23/08/2015</span> By:</p>
-                    <ProfileCard img='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' name='Dora' surname='Bakogianni' description={"Lorem ipsum etc that what it means to fight"} />
+                    <p className='text-2xl border-b-2 border-black'>Created at <span className='text-xl italic'>{new Date(collaboration.created_at).toDateString()}</span> By:</p>
+                    {creatorProfile && <ProfileCard img={creatorProfile.image} name={creatorProfile.name} surname={creatorProfile.surname} description={creatorProfile.description} facebook={creatorProfile.facebook} instagram={creatorProfile.instagram} email={creatorProfile.email} telephone={creatorProfile.telephone} />}
                 </div>
                 <div className={"absolute flex items-center gap-2 top-0 right-0 p-2 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={goToEditPage}>
                     <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1, collaboration.status.length)}</p>

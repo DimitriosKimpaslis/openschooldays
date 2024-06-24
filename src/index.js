@@ -19,6 +19,7 @@ import Collaboration from './components/userActions/Collaboration.jsx';
 import CreateCollaboration from './components/userActions/CreateCollaboration.jsx';
 import CollaborationPage from './components/userActions/CollaborationPage.jsx';
 import CollaborationPageEdit from './components/userActions/CollaborationPageEdit.jsx';
+import AddPeople from './components/editCollaborationOutlets/AddPeople.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -59,7 +60,7 @@ root.render(
               <Route index element={<h1>Description</h1>} />
               <Route path='settings' element={<h1>Settings</h1>} />
               <Route path='profile' element={<h1>Profile</h1>} />
-              <Route path='members' element={<h1>Members</h1>} />
+              <Route path='members' element={<AddPeople />} />
               <Route path='posts' element={<h1>Posts</h1>} />
               <Route path='alerts' element={<h1>Alerts</h1>} />
               <Route path='delete' element={<h1>Delete</h1>} />

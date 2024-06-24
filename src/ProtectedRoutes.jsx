@@ -11,7 +11,8 @@ const ProtectedRoutes = () => {
     }
 
     return (
-        user ? <Outlet /> : changeURL()
+        // user ? <Outlet /> : changeURL()
+        <Outlet />
     )
 }
 

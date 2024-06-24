@@ -146,15 +146,13 @@ const EditProfile = () => {
 
                             <p className='font-bold'>Facebook:</p>
                             <div className='flex items-center gap-1'>
-                                <p className='text-sm'>https://www.facebook.com/</p>
                                 <input type='text' placeholder='Empty..' value={tempUserDetails.facebook} onChange={(e) => setTempUserDetails({ ...tempUserDetails, facebook: e.target.value })} className='border border-black p-2 w-full' />
-                                <FacebookIcon className='text-5xl text-blue-800 hover:text-blue-500 cursor-pointer' onClick={() => openNewTab("https://www.facebook.com/".concat(tempUserDetails.facebook))} fontSize='' />
+                                <FacebookIcon className='text-5xl text-blue-800 hover:text-blue-500 cursor-pointer' onClick={() => openNewTab(tempUserDetails.facebook)} fontSize='' />
                             </div>
                             <p className='font-bold'>Instagram:</p>
                             <div className='flex items-center gap-1'>
-                                <p className='text-sm'>https://www.instagram.com/</p>
                                 <input type='text' placeholder='Empty..' value={tempUserDetails.instagram} onChange={(e) => setTempUserDetails({ ...tempUserDetails, instagram: e.target.value })} className='border border-black p-2 w-full' />
-                                <InstagramIcon className='text-5xl text-pink-600 hover:text-pink-400 cursor-pointer' onClick={() => openNewTab("https://www.instagram.com/".concat(tempUserDetails.instagram))} fontSize='' />
+                                <InstagramIcon className='text-5xl text-pink-600 hover:text-pink-400 cursor-pointer' onClick={() => openNewTab(tempUserDetails.instagram)} fontSize='' />
                             </div>
                             <p className='font-bold'>Email:</p>
                             <input type='text' placeholder='Empty..' value={tempUserDetails.email} onChange={(e) => setTempUserDetails({ ...tempUserDetails, email: e.target.value })} className='border border-black p-2 w-full' />
