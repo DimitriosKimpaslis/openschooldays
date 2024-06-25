@@ -11,6 +11,7 @@ import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { UserContext } from '../../App';
+import ArrowBack from '../etc/ArrowBack';
 
 const CreateCollaboration = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })
@@ -288,16 +289,16 @@ const CreateCollaboration = () => {
 
     return (
         <div>
-            <div className='container mx-auto flex flex-col items-center text-2xl'>
-                {mode === "create-collaboration" && <p className='text-7xl font-bold my-20'>Create Collaboration</p>}
-                {mode === "edit-collaboration" && <p className='text-7xl font-bold my-20'>Edit Collaboration</p>}
-                {mode === "edit-blog" && <p className='text-7xl font-bold my-20'>Edit Blog</p>}
+            <div className='relative container mx-auto flex flex-col items-center text-2xl py-10'>
+                {mode === "create-collaboration" && <p className='text-5xl font-bold pb-14'>Create Collaboration</p>}
+                {mode === "edit-collaboration" && <p className='text-5xl font-bold pb-14'>Edit Collaboration</p>}
+                {mode === "edit-blog" && <p className='text-5xl font-bold pb-14'>Edit Blog</p>}
                 <form className=' flex flex-col gap-3'>
                     <div className='space-y-5'>
-                        <p className=' text-5xl font-extralight'>Title:</p>
+                        <p className=' text-3xl'>Title:</p>
                         <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
                     </div>
-                    <p className='  text-5xl font-extralight'>Thumbnail:</p>
+                    <p className='  text-3xl'>Thumbnail:</p>
                     <label className='w-fit relative'>
                         <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
                         <div className='flex items-center'>
@@ -313,7 +314,7 @@ const CreateCollaboration = () => {
                         </div>
                     </label>
                     <div>
-                        <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
+                        <p className='mb-4  text-3xl'>Add Content:</p>
                         <div className='flex flex-col gap-5 mb-10 h-fit'>
                             {content.map((field, index) => {
                                 switch (field.type) {

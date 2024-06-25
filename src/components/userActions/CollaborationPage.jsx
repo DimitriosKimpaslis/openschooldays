@@ -124,7 +124,7 @@ const CollaborationPage = () => {
 
     return (
         <div>
-            <div className='container mx-auto space-y-4 relative'>
+            <div className='container mx-auto space-y-4 relative py-8'>
 
                 <div>
                     <img src={collaboration.idea && collaboration.idea.thumbnail} alt='collaboration' className='w-full h-[500px] object-contain' />
@@ -134,15 +134,6 @@ const CollaborationPage = () => {
                 <div>
                     <div className='flex items-center gap-1 border-b-2 border-black'>
                         <p className='text-2xl'><span className='font-bold text-4xl'>{collaboration.idea && collaboration.idea.title}</span></p>
-                    </div>
-                </div>
-
-                <div>
-                    <div className='flex items-center gap-1 border-b-2 border-black'>
-                        <p className='text-2xl'>Help Needed</p>
-                    </div>
-                    <div className='flex items-center justify-center h-32'>
-                        <p className='text-xl text-gray-500 italic'>Currently no help needed</p>
                     </div>
                 </div>
 

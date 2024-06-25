@@ -81,7 +81,7 @@ const HelpCreation = () => {
         if (collaboration.help_needed === null) {
             const { error } = await supabase
                 .from('collaboration')
-                .update({ help_needed: [{ title, content }] })
+                .update({ help_needed: [{ title, content, date: new Date() }] })
                 .eq('id', collaboration.id)
             if (error) {
                 console.error('Error uploading help:', error.message)
@@ -90,7 +90,7 @@ const HelpCreation = () => {
         } else {
             const { error } = await supabase
                 .from('collaboration')
-                .update({ help_needed: [...collaboration.help_needed, { title, content }] })
+                .update({ help_needed: [...collaboration.help_needed, { title, content, date: new Date() }] })
                 .eq('id', collaboration.id)
             if (error) {
                 console.error('Error uploading help:', error.message)

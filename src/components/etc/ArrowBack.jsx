@@ -13,7 +13,7 @@ const ArrowBack = ({location}) => {
     }
 
   return (
-      <div className='absolute left-0 top-0 bg-black text-white cursor-pointer hover:bg-neutral-800 rounded-lg px-4 py-2' onClick={goBack}>
+      <div className='absolute left-0 top-0 bg-black text-white cursor-pointer hover:bg-neutral-800 rounded-lg px-4 py-2 flex justify-center items-center' onClick={goBack}>
         <ArrowBackIcon />
     </div>
   )

@@ -58,7 +58,7 @@ const Collaboration = () => {
 
     return (
         <div>
-            <div className='relative container mx-auto'>
+            <div className='relative container mx-auto py-8'>
                 <ArrowBack location="/profile"/>
                 <p className='text-6xl text-center'>Collaboration</p>
                 <div className='flex justify-end items-center px-4'>
@@ -74,7 +74,7 @@ const Collaboration = () => {
                                 <SosIcon className='text-4xl text-red-500 relative top-[2px]' fontSize='' />
                                 <p className='text-2xl'>Help needed!</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 h-64'>
+                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]:'>
                                 {helpNeeded.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>No help currently needed</p>
@@ -82,14 +82,16 @@ const Collaboration = () => {
                                     :
                                     helpNeeded.map((collaboration, index) => {
                                         return collaboration.help_needed.map((help, helpIndex) => { // Renamed the inner index variable to helpIndex
+                                            const readableDate = new Date(help.date).toDateString()
                                             return (
-                                                <div className='w-full h-full flex flex-col items-center gap-1 shadow-md hover:shadow-xl cursor-pointer' key={helpIndex} onClick={() => navigate('/help-page/' + collaboration.id + "/" + helpIndex)}>
+                                                <div className='w-full h-full gap-1 shadow-md hover:shadow-xl cursor-pointer' key={helpIndex} onClick={() => navigate('/help-page/' + collaboration.id + "/" + helpIndex)}>
                                                     <div className='w-full h-32 bg-gray-500'>
                                                         <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
                                                     </div>
-                                                    <div className='p-2'>
+                                                    <div className='p-3'>
                                                         <p className='text-xl font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                                        <p className='text-xl'>{help.title}</p>
+                                                        <p className='text-lg'>{help.title}</p>
+                                                        <p className='text-xl'>{readableDate}</p>
                                                     </div>
                                                 </div>
                                             )
@@ -102,7 +104,7 @@ const Collaboration = () => {
                                 <CategoryIcon className='text-3xl text-green-500 relative top-[1px]' fontSize='' />
                                 <p className='text-2xl'>Active Collaborations</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 h-64'>
+                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
                                 {activeCollaborations.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>Empty...</p>
@@ -110,12 +112,7 @@ const Collaboration = () => {
                                     :
                                     activeCollaborations.map((collaboration, index) => {
                                         return (
-                                            <div className='w-full h-full flex flex-col items-center gap-1 shadow-md hover:shadow-xl cursor-pointer' key={index} onClick={() => navigate('/collaboration-page/' + collaboration.status + "/" + collaboration.id)}>
-                                                <div className='w-full h-32 bg-gray-500'>
-                                                    <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
-                                                </div>
-                                                <p className='text-xl'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                            </div>
+                                            <CollaborationCard collaboration={collaboration} key={index} />
                                         )
                                     })}
                             </div>
@@ -143,7 +140,7 @@ const Collaboration = () => {
                                 <GradeIcon className='text-3xl text-yellow-500 relative top-[1px]' fontSize='' />
                                 <p className='text-2xl'>Completed Collaborations</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 h-64'>
+                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
                                 {completedCollaborations.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>Such empty...</p>
@@ -151,12 +148,7 @@ const Collaboration = () => {
                                     :
                                     completedCollaborations.map((collaboration, index) => {
                                         return (
-                                            <div className='w-full h-full flex flex-col items-center gap-1 shadow-md hover:shadow-xl  cursor-pointer' key={index} onClick={() => navigate('/collaboration-page/' + collaboration.status + "/" + collaboration.id)}>
-                                                <div className='w-full h-32 bg-gray-500'>
-                                                    <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
-                                                </div>
-                                                <p className='text-xl'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                            </div>
+                                            <CollaborationCard collaboration={collaboration} key={index} />
                                         )
                                     })}
                             </div>

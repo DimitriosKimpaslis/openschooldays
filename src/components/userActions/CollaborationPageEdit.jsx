@@ -3,6 +3,7 @@ import { supabase } from '../../client'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { GlobalMessageContext, UserContext } from '../../App';
+import ArrowBack from '../etc/ArrowBack';
 
 const CollaborationPageEdit = () => {
   const navigate = useNavigate()
@@ -80,8 +81,9 @@ const CollaborationPageEdit = () => {
 
 
   return (
-    <div className='relative'>
-      <div className="flex justify-between items-center">
+    <div className='relative container mx-auto'>
+      <ArrowBack location={"/collaboration"} />
+      <div className="flex justify-between items-center py-10">
         <div className='container mx-auto grid grid-cols-12 gap-4'>
           <div className='flex flex-col col-span-3 border-r-4 border-black py-1 mt-5 font-medium pr-1'>
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate("change-content/edit-collaboration/".concat(collaboration.id))}>Change Description</p>
