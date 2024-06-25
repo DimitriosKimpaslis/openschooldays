@@ -22,6 +22,8 @@ import CollaborationPageEdit from './components/userActions/CollaborationPageEdi
 import AddPeople from './components/editCollaborationOutlets/AddPeople.jsx';
 import Description from './components/editCollaborationOutlets/Description.jsx';
 import ChangeStatus from './components/editCollaborationOutlets/ChangeStatus.jsx';
+import HelpCreation from './components/editCollaborationOutlets/HelpCreation.jsx';
+import HelpView from './components/views/HelpView.jsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -54,17 +56,18 @@ root.render(
             <Route path='/profile' element={<Profile />} />
             <Route path='/blog-creation' element={<BlogCreation />} />
             <Route path='/your-blogs/:page' element={<YourBlogs />} />
-            <Route path='edit-post/:postId' element={<EditPost />} />
-            <Route path='edit-profile' element={<EditProfile />} />
+            <Route path='/edit-post/:postId' element={<EditPost />} />
+            <Route path='/edit-profile' element={<EditProfile />} />
             <Route path="/collaboration" element={<Collaboration />} />
-            <Route path='create-collaboration/:editMode/:id?' element={<CreateCollaboration />} />
-            <Route path='collaboration-page/:status/:id' element={<CollaborationPage />} />
-            <Route path='collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
+            <Route path='/create-collaboration/:editMode/:id?' element={<CreateCollaboration />} />
+            <Route path='/collaboration-page/:status/:id' element={<CollaborationPage />} />
+            <Route path='/help-page/:id/:arrayId' element={<HelpView />} />
+            <Route path='/collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
               <Route index element={<Description />} />
               <Route path='change-content/:editMode/:id' element={<CreateCollaboration />} />
               <Route path='members' element={<AddPeople />} />
               <Route path='status' element={<ChangeStatus />} />
-              <Route path='alerts' element={<h1>Alerts</h1>} />
+              <Route path='create-help' element={<HelpCreation />} />
               <Route path='delete' element={<h1>Delete</h1>} />
             </Route>
           </Route>

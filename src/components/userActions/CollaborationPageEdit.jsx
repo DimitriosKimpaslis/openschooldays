@@ -88,7 +88,8 @@ const CollaborationPageEdit = () => {
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate('status')}>Change Status</p>
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate('members')}>Add people</p>
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Post update</p>
-            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Alert for help</p>
+            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate("create-help")}>Alert for help</p>
+            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Manage help</p>
             <div className='flex items-center gap-2 px-10 pt-16 pb-2'>
               <p className=' text-xl'>Dangerous Zone</p>
               <ReportProblemIcon className='text-red-500 relative top-[1px]' />
