@@ -9,6 +9,8 @@ import { supabase } from '../../client';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+
 
 const BlogCreation = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })
@@ -109,7 +111,6 @@ const BlogCreation = () => {
         return rows - 1;
     }
 
-
     const handleContentChange = (e, index) => {
         let inputRows
         if (e.target.value.length === 0) {
@@ -119,6 +120,9 @@ const BlogCreation = () => {
         }
         const updatedContent = [...content]
         updatedContent[index].value = e.target.value
+        if (updatedContent[index].type === 'bullets' && e.target.value === '') {
+            updatedContent[index].value = '• '
+        }
         updatedContent[index].rows = inputRows
         setContent(updatedContent)
     }
@@ -133,6 +137,14 @@ const BlogCreation = () => {
         setTitle({ value: e.target.value, rows: inputRows })
     }
 
+    const checkEnter = (e, index) => {
+        if (e.key === "Enter") {
+            const updatedContent = [...content]
+            updatedContent[index].value = updatedContent[index].value + "• "; // add a bullet point to the value string
+            setContent(updatedContent)
+        }
+    };
+
 
 
 
@@ -146,7 +158,7 @@ const BlogCreation = () => {
                 updatedContent.push({ type: 'paragraph', value: '', rows: 1 })
                 break
             case 'bullets':
-                updatedContent.push({ type: 'bullets', value: [], rows: 1 })
+                updatedContent.push({ type: 'bullets', value: '• ', rows: 1 })
                 break
             case 'image':
                 updatedContent.push({ type: 'image', value: 'https://placehold.co/600x400/png' })
@@ -215,6 +227,13 @@ const BlogCreation = () => {
                                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                                 </div>
                                             )
+                                        case 'bullets':
+                                            return (
+                                                <div className='flex items-center' key={index}>
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
+                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                                </div>
+                                            )
                                         case 'image':
                                             let imageSelected = false;
                                             if (content[index].value !== 'https://placehold.co/600x400/png') {
@@ -246,7 +265,7 @@ const BlogCreation = () => {
                                 })}
                             </div>
                             <div className='flex space-x-1 justify-center'>
-                                <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-3 p-1 gap-1'>
+                                <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-4 p-1 gap-1'>
                                     <Tooltip title={<p className='text-base'>Title</p>}>
                                         <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer ' onClick={() => addNewField('title')}>
                                             <TitleIcon />
@@ -256,7 +275,12 @@ const BlogCreation = () => {
                                         <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('paragraph')}>
                                             <FormatAlignJustifyIcon />
                                         </div>
-                                    </Tooltip>
+                                </Tooltip>
+                                <Tooltip title={<p className='text-base'>Bullets</p>}>
+                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('bullets')}>
+                                        <FormatListBulletedIcon />
+                                    </div>
+                                </Tooltip>
                                     <Tooltip title={<p className='text-base'>Image</p>}>
                                         <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
                                             <ImageIcon />

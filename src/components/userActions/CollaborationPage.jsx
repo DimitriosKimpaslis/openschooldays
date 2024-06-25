@@ -126,7 +126,6 @@ const CollaborationPage = () => {
         <div>
             <div className='container mx-auto space-y-4 relative'>
 
-
                 <div>
                     <img src={collaboration.idea && collaboration.idea.thumbnail} alt='collaboration' className='w-full h-[500px] object-contain' />
                 </div>
@@ -134,7 +133,7 @@ const CollaborationPage = () => {
 
                 <div>
                     <div className='flex items-center gap-1 border-b-2 border-black'>
-                        <p className='text-2xl'>Title: <span className='font-bold'>{collaboration.idea && collaboration.idea.title}</span></p>
+                        <p className='text-2xl'><span className='font-bold text-4xl'>{collaboration.idea && collaboration.idea.title}</span></p>
                     </div>
                 </div>
 
@@ -167,6 +166,11 @@ const CollaborationPage = () => {
                     <div className='flex items-center gap-1 border-b-2 border-black'>
                         <p className='text-2xl'>Executing Members</p>
                     </div>
+                    {profiles.length === 0 &&
+                        <div className='flex items-center justify-center h-32'>
+                            <p className='text-xl text-gray-500'>No members executing this collaboration</p>
+                        </div>
+                    }
                     <div className='flex gap-4'>
                         {profiles.map((profile, index) => {
                             return <ProfileCard key={index} img={profile.data.image} name={profile.data.name} surname={profile.data.surname} description={profile.data.description} facebook={profile.data.facebook} instagram={profile.data.instagram} email={profile.data.email} telephone={profile.data.telephone} />

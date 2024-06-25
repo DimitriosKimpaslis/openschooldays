@@ -271,11 +271,11 @@ const CreateCollaboration = () => {
             }
             const updateData = async () => {
                 const { error } = await supabase
-                    .from('blogs')
+                    .from('posts')
                     .update(dataToUpdate)
                     .eq('id', id)
                 if (!error) {
-                    navigate('/blog')
+                    navigate('/blog/1')
                 } else {
                     console.log(error)
                 }

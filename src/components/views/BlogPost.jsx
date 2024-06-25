@@ -33,13 +33,16 @@ const BlogPost = () => {
                     <div className='container mx-auto flex flex-col items-center gap-5 max-w-[800px]'>
                         <h1 className='text-5xl font-bold'>{post.title}</h1>
                         {post.thumbnail && <img src={post.thumbnail} alt={post.title + " image"} className='w-[800px] h-[500px] object-contain' />}
-                        <div>
+                        <div className='space-y-5'>
                             {post.content && post.content.map((item, index) => {
                                 if (item.type === 'title') {
                                     return <p key={index} className='text-3xl font-semibold'>{item.value}</p>
                                 }
                                 if (item.type === 'paragraph') {
                                     return <p key={index} className='text-xl'>{item.value}</p>
+                                }
+                                if (item.type === "bullets") {
+                                    return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
                                 }
                                 if (item.type === 'image') {
                                     return <img key={index} src={item.value} alt={post.title} className='w-[800px] h-[500px] object-cover' />

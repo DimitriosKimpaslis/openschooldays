@@ -22,6 +22,12 @@ const Preview = () => {
     setThumbnail(previewThumbnail)
   }, [])
 
+  useEffect(() => {
+    console.log('Title:', title)
+    console.log('Content:', content)
+    console.log('Thumbnail:', thumbnail)
+  }, [title, content, thumbnail])
+
   const { user } = useContext(UserContext)
   const userId = user.id
 
@@ -55,17 +61,20 @@ const Preview = () => {
     <div>
         <div className='container mx-auto flex flex-col items-center gap-5'>
           <h1 className='text-5xl font-bold'>{title}</h1>
-          {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[600px] h-[400px] object-cover' />}
+          {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[800px] h-[500px] object-contain' />}
           <div>
-            {content.map((item, index) => {
+          {content.map((item, index) => {
               if (item.type === 'title') {
                 return <p key={index} className='text-3xl font-semibold'>{item.value}</p>
               }
               if (item.type === 'paragraph') {
                 return <p key={index} className='text-xl'>{item.value}</p>
               }
+              if (item.type === "bullets") {
+                return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
+              }
               if (item.type === 'image') {
-                return <img key={index} src={item.value} alt={title} className='w-[600px] h-[400px] object-cover' />
+                return <img key={index} src={item.value} alt={title} className='w-[800px] h-[500px] object-cover' />
               }
               return null
             })}

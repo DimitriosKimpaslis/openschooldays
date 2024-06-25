@@ -31,7 +31,7 @@ const Header = () => {
     }, [user])
 
     return (
-        <div className=' text-gray-50 w-full flex justify-between items-center py-6 px-10 absolute z-50'>
+        <div className=' text-gray-50 w-full flex justify-between items-center py-6 px-10 absolute z-40'>
             <img src={birdLogo}
                 alt='bird logo'
                 className='w-32 h-32 cursor-pointer'

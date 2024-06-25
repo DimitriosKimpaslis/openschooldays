@@ -20,6 +20,9 @@ import CreateCollaboration from './components/userActions/CreateCollaboration.js
 import CollaborationPage from './components/userActions/CollaborationPage.jsx';
 import CollaborationPageEdit from './components/userActions/CollaborationPageEdit.jsx';
 import AddPeople from './components/editCollaborationOutlets/AddPeople.jsx';
+import Description from './components/editCollaborationOutlets/Description.jsx';
+import ChangeStatus from './components/editCollaborationOutlets/ChangeStatus.jsx';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -57,11 +60,10 @@ root.render(
             <Route path='create-collaboration/:editMode/:id?' element={<CreateCollaboration />} />
             <Route path='collaboration-page/:status/:id' element={<CollaborationPage />} />
             <Route path='collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
-              <Route index element={<h1>Description</h1>} />
+              <Route index element={<Description />} />
               <Route path='change-content/:editMode/:id' element={<CreateCollaboration />} />
-              <Route path='profile' element={<h1>Profile</h1>} />
               <Route path='members' element={<AddPeople />} />
-              <Route path='posts' element={<h1>Posts</h1>} />
+              <Route path='status' element={<ChangeStatus />} />
               <Route path='alerts' element={<h1>Alerts</h1>} />
               <Route path='delete' element={<h1>Delete</h1>} />
             </Route>
