@@ -41,53 +41,46 @@ const CollaborationPage = () => {
         return data[0]
     }
 
-    const findCreatorProfile = (tempProfiles, created_by_uid) => {
-        tempProfiles.forEach((profile) => {
-            if (profile.uid === created_by_uid) {
-                setCreatorProfile(profile)
-            }
-        })
-    }
-
     useEffect(() => {
         const color = getCollaborationStatusColor()
         setTicketColor(color)
 
         const fetchData = async () => {
-            const data = await getCollaborationData();
-            let created_by_uid = data.created_by_uid;
-            console.log("data:", data)
-            if (data) {
-                let memberUids = [];
-                if (data.executed_by_uids !== null) {
-                    data.executed_by_uids.forEach((item) => {
-                        memberUids.push(item);
-                    })
-                }
-                memberUids.push(created_by_uid);
-                let tempProfiles = [];
-                memberUids.forEach((uid) => {
-                    getProfileData(uid).then((data) => {
-                        tempProfiles.push(data);
+            try {
+                const data = await getCollaborationData();
+                let created_by_uid = data.created_by_uid;
+                console.log("created_by_uid:", created_by_uid);
+                if (data) {
+                    let memberUids = [];
+                    if (data.executed_by_uids !== null) {
+                        data.executed_by_uids.forEach((uid) => {
+                            memberUids.push({ uid });
+                        })
                     }
-                    ).then(() => {
-                        findCreatorProfile(tempProfiles, created_by_uid)
-                        setProfiles(tempProfiles)
-                    })
-                })
 
+                    let tempProfiles = [];
+                    for (const uid of memberUids) {
+                        const profileData = await getProfileData(uid.uid);
+                        tempProfiles.push({ data: profileData });
+                    }
+                    console.log("tempProfiles:", tempProfiles)
+                    let creatorProfile = tempProfiles.find((profile) => profile.data.uid === created_by_uid);
+                    if (!creatorProfile) {
+                        creatorProfile = await getProfileData(created_by_uid);
+                        setCreatorProfile(creatorProfile)
+                    } else {
+                        setCreatorProfile(creatorProfile.data)
+                    }
+                    console.log("creatorProfile:", creatorProfile)
+                    setProfiles(tempProfiles)
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
             }
         }
+
         fetchData();
     }, [])
-
-    useEffect(() => {
-        console.log("profiles:", profiles)
-    }, [profiles])
-
-    useEffect(() => {
-        console.log("creatorProfile:", creatorProfile)
-    }, [creatorProfile])
 
     const getCollaborationStatusColor = () => {
         switch (status) {
@@ -175,18 +168,9 @@ const CollaborationPage = () => {
                         <p className='text-2xl'>Executing Members</p>
                     </div>
                     <div className='flex gap-4'>
-                        <div className='flex flex-col items-center gap-1'>
-                            <img src='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/1bbwcau78u4hp0mz9ybc2n1718552675807' alt='member' className='w-20 h-20 object-cover rounded-full' />
-                            <p className='text-lg max-w-32  text-center'>Eleutherios Benizelos</p>
-                        </div>
-                        <div className='flex flex-col items-center gap-1'>
-                            <img src='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/brexny8iuykqxpkdt1et6m1718552906890' alt='member' className='w-20 h-20 object-cover rounded-full' />
-                            <p className='text-lg max-w-32  text-center'>Georgios Papandreou</p>
-                        </div>
-                        <div className='flex flex-col items-center gap-1'>
-                            <img src='https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/ProfileImages/n2uizm0t6qsv6yk6lx03r1718553316373' alt='member' className='w-20 h-20 object-cover rounded-full' />
-                            <p className='text-lg max-w-32  text-center'>Dora Bakogianni</p>
-                        </div>
+                        {profiles.map((profile, index) => {
+                            return <ProfileCard key={index} img={profile.data.image} name={profile.data.name} surname={profile.data.surname} description={profile.data.description} facebook={profile.data.facebook} instagram={profile.data.instagram} email={profile.data.email} telephone={profile.data.telephone} />
+                        })}
                     </div>
                 </div>
 

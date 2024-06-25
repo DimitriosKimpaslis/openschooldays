@@ -44,7 +44,7 @@ const YourBlogs = () => {
     }
 
     const editPost = (postId) => {
-        navigate('/edit-post/' + postId)
+        navigate('/create-collaboration/edit-blog/'.concat(postId))
     }
 
     return (

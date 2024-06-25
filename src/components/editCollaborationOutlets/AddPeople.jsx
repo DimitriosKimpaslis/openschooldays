@@ -26,11 +26,9 @@ const AddPeople = () => {
                 let peopleNotInCollaboration = [];
                 data.forEach((person) => {
                     if (collaboration !== undefined && !collaboration.executed_by_uids?.includes(person.uid)) {
-                        console.log(person.uid, collaboration.executed_by_uids)
                         peopleNotInCollaboration.push({ ...person, showCheckIcon: false })
                     }
                 })
-                console.log(peopleNotInCollaboration)
                 setPeopleNotInCollaboration(peopleNotInCollaboration)
             })
         }
@@ -101,6 +99,8 @@ const AddPeople = () => {
     return (
         <div >
             <p className='text-3xl my-5'>Add People</p>
+            <p className='text-xl text-gray-500 mb-10'>Select people to add to the collaboration</p>
+            {peopleNotInCollaboration.length > 0 ? (
             <div className='grid grid-cols-5'>
                 {peopleNotInCollaboration.map((person) => {
                     return (
@@ -116,6 +116,11 @@ const AddPeople = () => {
                     )
                 })}
             </div>
+            ) : (
+                    <div className='flex justify-center items-center h-40'>
+                        <p className='text-lg text-center text-gray-500'>No people to add</p>
+                    </div>
+            )}
             <div className='flex justify-center mt-10'>
                 <button onClick={handleUpdate} className='bg-green-500 hover:bg-green-600 text-white py-2 px-6'>Update</button>
             </div>

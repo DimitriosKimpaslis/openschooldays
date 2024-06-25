@@ -31,3 +31,7 @@ div.profileCard:hover div.profilePopup {
 .bg-gradient {
     background: linear-gradient(to bottom, #c83474 0%,#f0645c 40%, #f8bc84 100%);
 }
+
+.content{
+    min-height: calc(100vh - 80px);
+}

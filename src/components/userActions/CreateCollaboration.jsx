@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TitleIcon from '@mui/icons-material/Title';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import ImageIcon from '@mui/icons-material/Image';
 import { Tooltip } from '@mui/material';
 import { DynamicTextArea } from '../etc/DynamicTextArea';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../client';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
@@ -16,6 +16,53 @@ const CreateCollaboration = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })
     const [thumbnail, setThumbnail] = useState('https://placehold.co/600x400/png')
     const [content, setContent] = useState([])
+    const [mode, setMode] = useState('create-collaboration')
+
+    const { editMode, id } = useParams()
+    useEffect(() => {
+        if (editMode === 'edit-blog') {
+            setMode('edit-blog')
+        } else if (editMode === 'edit-collaboration') {
+            setMode('edit-collaboration')
+        }
+    }, [editMode])
+
+    useEffect(() => {
+        if (mode === 'edit-collaboration') {
+            const getCollaborationData = async () => {
+                const { data, error } = await supabase
+                    .from('collaboration')
+                    .select('*')
+                    .eq('id', id)
+                if (error) {
+                    console.error('Error fetching collaborations:', error.message)
+                }
+                setTitle({ value: data[0].idea.title, rows: 1 })
+                setThumbnail(data[0].idea.thumbnail)
+                setContent(data[0].idea.content)
+            }
+            getCollaborationData()
+        }
+    }, [mode, id])
+
+    useEffect(() => {
+        if (mode === 'edit-blog') {
+            const getBlogData = async () => {
+                const { data, error } = await supabase
+                    .from('posts')
+                    .select('*')
+                    .eq('id', id)
+                if (error) {
+                    console.error('Error fetching blogs:', error.message)
+                }
+                setTitle({ value: data[0].title, rows: 1 })
+                setThumbnail(data[0].thumbnail)
+                setContent(data[0].content)
+            }
+            getBlogData()
+        }
+    }, [mode, id])
+
 
     const { user } = useContext(UserContext)
 
@@ -186,115 +233,173 @@ const CreateCollaboration = () => {
         }
     }
 
+    const updateCollaboration = async () => {
+        if (title.value.length === 0 || content.length === 0) {
+            alert('Please fill in the title as well as adding some content')
+        } else {
+            const idea = {
+                title: title.value,
+                thumbnail: thumbnail,
+                content: content,
+            }
+            const dataToUpdate = {
+                idea: idea,
+            }
+            const updateData = async () => {
+                const { error } = await supabase
+                    .from('collaboration')
+                    .update(dataToUpdate)
+                    .eq('id', id)
+                if (!error) {
+                    navigate('/collaboration')
+                } else {
+                    console.log(error)
+                }
+            }
+            updateData()
+        }
+    }
+
+    const updateBlog = async () => {
+        if (title.value.length === 0 || content.length === 0) {
+            alert('Please fill in the title as well as adding some content')
+        } else {
+            const dataToUpdate = {
+                title: title.value,
+                thumbnail: thumbnail,
+                content: content,
+            }
+            const updateData = async () => {
+                const { error } = await supabase
+                    .from('blogs')
+                    .update(dataToUpdate)
+                    .eq('id', id)
+                if (!error) {
+                    navigate('/blog')
+                } else {
+                    console.log(error)
+                }
+            }
+            updateData()
+        }
+    }
+
+
+
     return (
         <div>
-                <div className='container mx-auto flex flex-col items-center text-2xl'>
-                    <p className='text-7xl font-bold my-20'>Collaboration Idea Creation</p>
-                    <form className=' flex flex-col gap-3'>
-                        <div className='space-y-5'>
-                            <p className=' text-5xl font-extralight'>Title:</p>
-                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
+            <div className='container mx-auto flex flex-col items-center text-2xl'>
+                {mode === "create-collaboration" && <p className='text-7xl font-bold my-20'>Create Collaboration</p>}
+                {mode === "edit-collaboration" && <p className='text-7xl font-bold my-20'>Edit Collaboration</p>}
+                {mode === "edit-blog" && <p className='text-7xl font-bold my-20'>Edit Blog</p>}
+                <form className=' flex flex-col gap-3'>
+                    <div className='space-y-5'>
+                        <p className=' text-5xl font-extralight'>Title:</p>
+                        <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
+                    </div>
+                    <p className='  text-5xl font-extralight'>Thumbnail:</p>
+                    <label className='w-fit relative'>
+                        <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                        <div className='flex items-center'>
+                            {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
+                            <div className='flex items-center gap-1'>
+                                {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
+                            </div>
                         </div>
-                        <p className='  text-5xl font-extralight'>Thumbnail:</p>
-                        <label className='w-fit relative'>
-                            <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
-                            <div className='flex items-center'>
-                                {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
-                                <div className='flex items-center gap-1'>
-                                    {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                    <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
-                                </div>
-                            </div>
-                            <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
-                            <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
-                                <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                            </div>
-                        </label>
-                        <div>
-                            <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
-                            <div className='flex flex-col gap-5 mb-10 h-fit'>
-                                {content.map((field, index) => {
-                                    switch (field.type) {
-                                        case 'title':
-                                            return (
-                                                <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
-                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                                </div>
-                                            )
-                                        case 'paragraph':
-                                            return (
-                                                <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
-                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                                </div>
-                                            )
-                                        case 'bullets':
-                                            return (
-                                                <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
-                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                                </div>
-                                            )
-                                        case 'image':
-                                            let imageSelected = false;
-                                            if (content[index].value !== 'https://placehold.co/600x400/png') {
-                                                imageSelected = true;
-                                            }
-                                            return (
-                                                <div key={index} className='flex items-center'>
-                                                    <label className='w-fit relative'>
-                                                        <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
-                                                        <div className='flex items-center'>
-                                                            {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
-                                                            <div className='flex items-center gap-1'>
-                                                                {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                                                <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
-                                                            </div>
-                                                        </div>
-                                                        <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
-                                                        <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
-                                                            <FileUploadIcon className='text-white text-7xl' fontSize='' />
-                                                        </div>
-                                                    </label>
-                                                    <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
-                                                </div>
-
-                                            )
-                                        default:
-                                            return null
-                                    }
-                                })}
-                            </div>
-                            <div className='flex space-x-1 justify-center'>
-                                <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-4 p-1 gap-1'>
-                                    <Tooltip title={<p className='text-base'>Title</p>}>
-                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer ' onClick={() => addNewField('title')}>
-                                            <TitleIcon />
-                                        </div>
-                                    </Tooltip>
-                                    <Tooltip title={<p className='text-base'>Paragraph</p>}>
-                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('paragraph')}>
-                                            <FormatAlignJustifyIcon />
-                                        </div>
-                                    </Tooltip>
-                                    <Tooltip title={<p className='text-base'>Bullets</p>}>
-                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('bullets')}>
-                                            <FormatListBulletedIcon />
-                                        </div>
-                                    </Tooltip>
-                                    <Tooltip title={<p className='text-base'>Image</p>}>
-                                        <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
-                                            <ImageIcon />
-                                        </div>
-                                    </Tooltip>
-                                </div>
-                            </div>
-
+                        <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
+                        <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-150 w-full h-full flex justify-center items-center cursor-pointer'>
+                            <FileUploadIcon className='text-white text-7xl' fontSize='' />
                         </div>
-                        <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={upload}>Upload</button>
-                    </form>
-                </div>
+                    </label>
+                    <div>
+                        <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
+                        <div className='flex flex-col gap-5 mb-10 h-fit'>
+                            {content.map((field, index) => {
+                                switch (field.type) {
+                                    case 'title':
+                                        return (
+                                            <div className='flex items-center' key={index}>
+                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+                                        )
+                                    case 'paragraph':
+                                        return (
+                                            <div className='flex items-center' key={index}>
+                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+                                        )
+                                    case 'bullets':
+                                        return (
+                                            <div className='flex items-center' key={index}>
+                                                <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+                                        )
+                                    case 'image':
+                                        let imageSelected = false;
+                                        if (content[index].value !== 'https://placehold.co/600x400/png') {
+                                            imageSelected = true;
+                                        }
+                                        return (
+                                            <div key={index} className='flex items-center'>
+                                                <label className='w-fit relative'>
+                                                    <img src={content[index].value} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
+                                                    <div className='flex items-center'>
+                                                        {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
+                                                        <div className='flex items-center gap-1'>
+                                                            {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
+                                                            <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
+                                                        </div>
+                                                    </div>
+                                                    <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />
+                                                    <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 w-full h-full flex justify-center items-center cursor-pointer'>
+                                                        <FileUploadIcon className='text-white text-7xl' fontSize='' />
+                                                    </div>
+                                                </label>
+                                                <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
+                                            </div>
+
+                                        )
+                                    default:
+                                        return null
+                                }
+                            })}
+                        </div>
+                        <div className='flex space-x-1 justify-center'>
+                            <div id='action-bar' className='w-64 bg-newPurple h-14 grid grid-cols-4 p-1 gap-1'>
+                                <Tooltip title={<p className='text-base'>Title</p>}>
+                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer ' onClick={() => addNewField('title')}>
+                                        <TitleIcon />
+                                    </div>
+                                </Tooltip>
+                                <Tooltip title={<p className='text-base'>Paragraph</p>}>
+                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('paragraph')}>
+                                        <FormatAlignJustifyIcon />
+                                    </div>
+                                </Tooltip>
+                                <Tooltip title={<p className='text-base'>Bullets</p>}>
+                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('bullets')}>
+                                        <FormatListBulletedIcon />
+                                    </div>
+                                </Tooltip>
+                                <Tooltip title={<p className='text-base'>Image</p>}>
+                                    <div className='bg-white flex items-center justify-center hover:bg-newPurple hover:text-white cursor-pointer' onClick={() => addNewField('image')}>
+                                        <ImageIcon />
+                                    </div>
+                                </Tooltip>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {mode === 'create-collaboration' && <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={upload}>Upload</button>}
+                    {mode === "edit-collaboration" && <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={updateCollaboration}>Update</button>}
+                    {mode === "edit-blog" && <button type='button' className='p-4 bg-newSomon text-newPurple2 hover:bg-newPurple2 hover:text-newSomon' onClick={updateBlog}>Update</button>}
+                </form>
+            </div>
 
         </div>
 

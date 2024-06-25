@@ -29,10 +29,10 @@ const CollaborationPageEdit = () => {
     <div className='relative'>
       <div className="flex justify-between items-center">
         <div className='container mx-auto grid grid-cols-12 gap-4'>
-          <div className='flex flex-col col-span-3 border-r-4 border-black py-1 mt-5 font-medium'>
-            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Change Title/Content/Thumbnail</p>
-            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Change Collaboration Status {collaboration.status}</p>
-            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate('members')}>Add people to execution</p>
+          <div className='flex flex-col col-span-3 border-r-4 border-black py-1 mt-5 font-medium pr-1'>
+            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate("change-content/edit-collaboration/".concat(collaboration.id))}>Change Title/Content/Thumbnail</p>
+            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Change Status</p>
+            <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer' onClick={() => navigate('members')}>Add people</p>
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Post update</p>
             <p className=' px-10 py-3 text-xl hover:bg-black hover:text-white cursor-pointer'>Alert for help</p>
             <div className='flex items-center gap-2 px-10 pt-16 pb-2'>

@@ -54,11 +54,11 @@ root.render(
             <Route path='edit-post/:postId' element={<EditPost />} />
             <Route path='edit-profile' element={<EditProfile />} />
             <Route path="/collaboration" element={<Collaboration />} />
-            <Route path='create-collaboration' element={<CreateCollaboration />} />
+            <Route path='create-collaboration/:editMode/:id?' element={<CreateCollaboration />} />
             <Route path='collaboration-page/:status/:id' element={<CollaborationPage />} />
             <Route path='collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
               <Route index element={<h1>Description</h1>} />
-              <Route path='settings' element={<h1>Settings</h1>} />
+              <Route path='change-content/:editMode/:id' element={<CreateCollaboration />} />
               <Route path='profile' element={<h1>Profile</h1>} />
               <Route path='members' element={<AddPeople />} />
               <Route path='posts' element={<h1>Posts</h1>} />

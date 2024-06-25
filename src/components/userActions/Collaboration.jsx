@@ -53,7 +53,7 @@ const Collaboration = () => {
             <div className='container mx-auto'>
                 <p className='text-6xl text-center'>Collaboration</p>
                 <div className='flex justify-end items-center px-4'>
-                    <div className='flex flex-col items-center hover:text-gray-500 cursor-pointer' onClick={() => navigate('/create-collaboration')}>
+                    <div className='flex flex-col items-center hover:text-gray-500 cursor-pointer' onClick={() => navigate('/create-collaboration/create-collaboration')}>
                         <p className='text-xl font-bold'>Collaboration Creation</p>
                         <AddCircleIcon className='text-6xl' fontSize='' />
                     </div>
