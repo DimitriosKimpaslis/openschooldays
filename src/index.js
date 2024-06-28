@@ -26,6 +26,7 @@ import HelpCreation from './components/editCollaborationOutlets/HelpCreation.jsx
 import HelpView from './components/views/HelpView.jsx';
 import HelpManagment from './components/editCollaborationOutlets/HelpManagment.jsx';
 import PostUpdate from './components/editCollaborationOutlets/PostUpdate.jsx';
+import ManageUpdates from './components/editCollaborationOutlets/ManageUpdates.jsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -72,6 +73,7 @@ root.render(
               <Route path='create-help' element={<HelpCreation />} />
               <Route path='manage-help' element={<HelpManagment />} />
               <Route path='post-update' element={<PostUpdate />} />
+              <Route path='manage-updates' element={<ManageUpdates />} />
             </Route>
           </Route>
         </Route>

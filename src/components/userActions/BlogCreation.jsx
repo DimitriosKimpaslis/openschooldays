@@ -186,14 +186,14 @@ const BlogCreation = () => {
 
     return (
         <div>
-                <div className='container mx-auto flex flex-col items-center text-2xl '>
-                    <p className='text-7xl font-bold my-20'>Blog Creation</p>
+                <div className='container mx-auto flex flex-col items-center text-2xl pb-10'>
+                    <p className='text-5xl font-bold my-20'>Blog Creation</p>
                     <form className='flex flex-col gap-3'>
                         <div className='space-y-5'>
-                            <p className=' text-5xl font-extralight'>Title:</p>
+                            <p className=' text-4xl font-extralight'>Title:</p>
                             <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
                         </div>
-                        <p className='  text-5xl font-extralight'>Thumbnail:</p>
+                        <p className='  text-4xl font-extralight'>Thumbnail:</p>
                         <label className='w-fit relative'>
                             <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
                             <div className='flex items-center'>
@@ -209,7 +209,7 @@ const BlogCreation = () => {
                             </div>
                         </label>
                         <div>
-                            <p className='mb-4  text-5xl font-extralight'>Add Content:</p>
+                            <p className='mb-4  text-4xl font-extralight'>Add Content:</p>
                             <div className='flex flex-col gap-5 mb-10 h-fit'>
                                 {content.map((field, index) => {
                                     switch (field.type) {

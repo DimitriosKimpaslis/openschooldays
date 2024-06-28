@@ -4,6 +4,7 @@ import { supabase } from '../../client'
 import SettingsIcon from '@mui/icons-material/Settings';
 import ProfileCard from '../etc/ProfileCard';
 import { UserContext } from '../../App';
+import ArrowBack from '../etc/ArrowBack';
 
 const CollaborationPage = () => {
     const navigate = useNavigate()
@@ -14,7 +15,6 @@ const CollaborationPage = () => {
     const [ticketColor, setTicketColor] = useState('bg-gray-500')
     const [profiles, setProfiles] = useState([])
     const [creatorProfile, setCreatorProfile] = useState()
-
 
     const getCollaborationData = async () => {
         const { data, error } = await supabase
@@ -48,8 +48,8 @@ const CollaborationPage = () => {
         const fetchData = async () => {
             try {
                 const data = await getCollaborationData();
+                console.log(data);
                 let created_by_uid = data.created_by_uid;
-                console.log("created_by_uid:", created_by_uid);
                 if (data) {
                     let memberUids = [];
                     if (data.executed_by_uids !== null) {
@@ -63,7 +63,6 @@ const CollaborationPage = () => {
                         const profileData = await getProfileData(uid.uid);
                         tempProfiles.push({ data: profileData });
                     }
-                    console.log("tempProfiles:", tempProfiles)
                     let creatorProfile = tempProfiles.find((profile) => profile.data.uid === created_by_uid);
                     if (!creatorProfile) {
                         creatorProfile = await getProfileData(created_by_uid);
@@ -71,7 +70,6 @@ const CollaborationPage = () => {
                     } else {
                         setCreatorProfile(creatorProfile.data)
                     }
-                    console.log("creatorProfile:", creatorProfile)
                     setProfiles(tempProfiles)
                 }
             } catch (error) {
@@ -125,6 +123,7 @@ const CollaborationPage = () => {
     return (
         <div>
             <div className='container mx-auto space-y-4 relative py-8'>
+                <ArrowBack location={"/collaboration"} />
 
                 <div>
                     <img src={collaboration.idea && collaboration.idea.thumbnail} alt='collaboration' className='w-full h-[500px] object-contain' />
@@ -137,19 +136,32 @@ const CollaborationPage = () => {
                     </div>
                 </div>
 
-                <div className='space-y-4'>
-                    <div className='flex gap-1 border-b-2 border-black'>
+                <div>
+                    <div className='flex gap-1 border-b-2 border-black mb-3'>
                         <p className='text-2xl'>Updates</p>
                     </div>
-                    <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        <p className='text-lg'>Changed trash cans around PAOK stadium at <span className='text-gray-500'>10/03/2021</span></p>
-                    </div>
-                    <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        <p className='text-lg'>Talked with president for issue at <span className='text-gray-500'>23/08/2020</span></p>
-                    </div>
-                    <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        <p className='text-lg'>Changed trash cans in Tirolois at <span className='text-gray-500'>23/05/2018</span></p>
-                    </div>
+                    {collaboration.updates && collaboration.updates.length !== 0 ?
+                        collaboration.updates.map((update, index) => {
+                            const date = new Date(update.date).toDateString()
+                            return <div key={index} className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
+                                <p className='text-lg'>{update.title} at {date}</p>
+                            </div>
+                        })
+                        // <div className='space-y-4'>
+                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
+                        //         <p className='text-lg'>Changed trash cans around PAOK stadium at <span className='text-gray-500'>10/03/2021</span></p>
+                        //     </div>
+                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
+                        //         <p className='text-lg'>Talked with president for issue at <span className='text-gray-500'>23/08/2020</span></p>
+                        //     </div>
+                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
+                        //         <p className='text-lg'>Changed trash cans in Tirolois at <span className='text-gray-500'>23/05/2018</span></p>
+                        //     </div>
+                        // </div>
+                        :
+                        <div className='flex justify-center items-center h-[200px]'>
+                            <p className='text-xl text-gray-500'>No updates for this collaboration</p>
+                        </div>}
                 </div>
 
 

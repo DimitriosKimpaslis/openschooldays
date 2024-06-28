@@ -77,27 +77,27 @@ const PostUpdate = () => {
         setContent(updatedContent)
     }
 
-    const uploadHelp = async () => {
+    const uploadUpdate = async () => {
         if (title === '') {
             alert('Please add a title')
             return
         }
-        if (collaboration.help_needed === null) {
+        if (collaboration.updates === null) {
             const { error } = await supabase
                 .from('collaboration')
-                .update({ help_needed: [{ title, content, date: new Date() }] })
+                .update({ updates: [{ title, content, date: new Date() }] })
                 .eq('id', collaboration.id)
             if (error) {
-                console.error('Error uploading help:', error.message)
+                console.error('Error uploading update:', error.message)
                 return
             }
         } else {
             const { error } = await supabase
                 .from('collaboration')
-                .update({ help_needed: [...collaboration.help_needed, { title, content, date: new Date() }] })
+                .update({ updates: [...collaboration.updates, { title, content, date: new Date() }] })
                 .eq('id', collaboration.id)
             if (error) {
-                console.error('Error uploading help:', error.message)
+                console.error('Error uploading update:', error.message)
                 return
             }
         }
@@ -159,7 +159,7 @@ const PostUpdate = () => {
                 </div>
             </div>
             <div className='flex justify-center mb-10'>
-                <button onClick={uploadHelp} className='bg-newSomon hover:bg-gray-600 text-newPink px-4 py-2 text-xl mt-10'>Upload</button>
+                <button onClick={uploadUpdate} className='bg-newSomon hover:bg-gray-600 text-newPink px-4 py-2 text-xl mt-10'>Upload</button>
             </div>
         </div>
     )

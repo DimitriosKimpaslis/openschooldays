@@ -74,8 +74,8 @@ function App() {
               </div>
               <p className='text-xl font-normal text-center'>{globalMessage.message}</p>
               <div className='flex justify-center gap-2'>
-                <button onClick={globalMessage.yes} className='bg-green-500 hover:bg-green-600 text-white px-10 py-1 rounded'>Yes</button>
-                <button onClick={globalMessage.no} className='bg-red-500 hover:bg-red-600 text-white px-10 py-1 rounded'>No</button>
+                <button onClick={globalMessage.yes} className='bg-green-500 hover:bg-green-600 text-white px-14 py-2 rounded'>Yes</button>
+                <button onClick={globalMessage.no} className='bg-red-500 hover:bg-red-600 text-white px-14 py-2 rounded'>No</button>
               </div>
             </div>
           </div>

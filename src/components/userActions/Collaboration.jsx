@@ -45,7 +45,6 @@ const Collaboration = () => {
                 if (collaboration.help_needed === null) return false
                 return collaboration.help_needed.length > 0
             })
-            console.log(helpNeeded, 'helpNeeded')
             setHelpNeeded(helpNeeded)
         }
     }

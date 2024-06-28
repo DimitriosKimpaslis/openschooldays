@@ -1,23 +1,24 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
     return (
-        <footer class="bg-newSomon shadow">
-            <div class="w-full mx-auto max-w-screen-xl h-20 p-4 md:flex md:items-center md:justify-between">
-                <span class="text-sm  sm:text-center ">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+        <footer className="bg-newSomon shadow">
+            <div className="w-full mx-auto max-w-screen-xl h-20 p-4 md:flex md:items-center md:justify-between">
+                <span className="text-sm  sm:text-center ">© 2024 <NavLink href="#" className="hover:underline">OpenSchoolDays™</NavLink>. All Rights Reserved.
                 </span>
-                <ul class="flex flex-wrap items-center mt-3 text-sm font-medium   sm:mt-0">
+                <ul className="flex flex-wrap items-center mt-3 text-sm font-medium   sm:mt-0">
                     <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                        <NavLink href="#" className="hover:underline me-4 md:me-6">About</NavLink>
                     </li>
                     <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                        <NavLink href="#" className="hover:underline me-4 md:me-6">Privacy Policy</NavLink>
                     </li>
                     <li>
-                        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                        <NavLink href="#" className="hover:underline me-4 md:me-6">Licensing</NavLink>
                     </li>
                     <li>
-                        <a href="#" class="hover:underline">Contact</a>
+                        <NavLink href="#" className="hover:underline">Contact</NavLink>
                     </li>
                 </ul>
             </div>

@@ -11,6 +11,7 @@ import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { UserContext } from '../../App';
+import ArrowBack from '../etc/ArrowBack';
 
 const CreateCollaboration = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })
@@ -289,6 +290,7 @@ const CreateCollaboration = () => {
     return (
         <div>
             <div className='relative container mx-auto flex flex-col items-center text-2xl py-10'>
+                <ArrowBack location={"goBack"} />
                 {mode === "create-collaboration" && <p className='text-5xl font-bold pb-14'>Create Collaboration</p>}
                 {mode === "edit-collaboration" && <p className='text-5xl font-bold pb-14'>Edit Collaboration</p>}
                 {mode === "edit-blog" && <p className='text-5xl font-bold pb-14'>Edit Blog</p>}
