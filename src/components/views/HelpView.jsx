@@ -6,18 +6,20 @@ import ArrowBack from '../etc/ArrowBack';
 const HelpView = () => {
     const { id, arrayId } = useParams();
     const [helpObject, setHelpObject] = useState({})
+    const [title, setTitle] = useState('')
 
     useEffect(() => {
         const getHelpObject = async () => {
             const { data, error } = await supabase
                 .from('collaboration')
-                .select('help_needed')
+                .select('help_needed, idea')
                 .eq('id', id)
             if (error) {
                 console.error('Error fetching help object:', error.message)
                 return
             }
             setHelpObject(data[0].help_needed[arrayId])
+            setTitle(data[0].idea.title)
         }
         getHelpObject()
     }
@@ -25,7 +27,8 @@ const HelpView = () => {
     
     return (
         <div className='relative container mx-auto flex flex-col items-center'>
-            <ArrowBack location="goBack"/>
+            <ArrowBack location="goBack" />
+            <h1 className='text-4xl font-semibold'>{title}</h1>
             <h1>{helpObject.title}</h1>
             {helpObject.content?.map((item, index) => {
                 if (item.type === 'paragraph' || item.type === 'bullets') {

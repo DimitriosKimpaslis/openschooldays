@@ -78,6 +78,10 @@ const HelpCreation = () => {
     }
 
     const uploadHelp = async () => {
+        if (title === '') {
+            alert('Please add a title')
+            return
+        }
         if (collaboration.help_needed === null) {
             const { error } = await supabase
                 .from('collaboration')

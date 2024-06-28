@@ -74,7 +74,7 @@ const Collaboration = () => {
                                 <SosIcon className='text-4xl text-red-500 relative top-[2px]' fontSize='' />
                                 <p className='text-2xl'>Help needed!</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]:'>
+                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
                                 {helpNeeded.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>No help currently needed</p>

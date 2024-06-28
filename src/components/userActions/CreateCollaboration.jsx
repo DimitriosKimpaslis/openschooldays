@@ -11,7 +11,6 @@ import CloudDoneIcon from '@mui/icons-material/CloudDone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { UserContext } from '../../App';
-import ArrowBack from '../etc/ArrowBack';
 
 const CreateCollaboration = () => {
     const [title, setTitle] = useState({ value: '', rows: 1 })

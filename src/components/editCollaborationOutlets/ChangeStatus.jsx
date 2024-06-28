@@ -23,7 +23,7 @@ const ChangeStatus = () => {
     return (
         <div>
             <h1>Change Status</h1>
-            <p>Change the status of the collaboration</p>
+            <p className='pb-1'>Change the status of the collaboration</p>
             <p className='text-gray-500'>Active is for the currently running collaborations, Inactive for future ideas that are to be executed, and Completed for finished collaborations that no longer need our attention.</p>
             <div className='flex items-center gap-4 h-32 w-40'>
                 {statusOptions.map((option, index) => {
