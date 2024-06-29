@@ -19,7 +19,7 @@ const Home = () => {
                         </div>
                         <p className='text-xl text-newSomon'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         <div className='flex items-center space-x-12'>
-                            <div className='flex justify-around bg-newSomon w-96 h-fit py-3 text-xl hover:bg-newPurple2 text-newPurple2 hover:text-newSomon transition-colors duration-400 cursor-pointer'>
+                            <div className='flex justify-around items-center bg-newSomon w-96 h-fit py-3 text-xl hover:bg-newPurple2 text-newPurple2 hover:text-newSomon transition-colors duration-400 cursor-pointer'>
                                 <p className='text-xl font-bold'>ΔΡΑΣΕΙΣ</p>
                                 <TrendingFlatIcon className='text-4xl' fontSize='' />
                             </div>

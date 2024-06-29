@@ -17,7 +17,6 @@ const HelpManagment = () => {
     const navigate = useNavigate();
 
     const deleteHelp = async (helpIndex) => {
-        const help = helpNeeded[helpIndex]
         const newHelpNeeded = helpNeeded.filter((help, index) => index !== helpIndex)
         const { error } = await supabase
             .from('collaboration')

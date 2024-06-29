@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { supabase } from '../../client';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import { UserContext } from '../../App';
+import { GlobalMessageContext, UserContext } from '../../App';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const YourBlogs = () => {
     const [loading, setLoading] = useState(true)
     const { page } = useParams();
     const { user } = useContext(UserContext)
+    const { globalMessage, setGlobalMessage } = useContext(GlobalMessageContext)
     const navigate = useNavigate()
     const [posts, setPosts] = useState([])
     const [lastPageExists, setLastPageExists] = useState(true)
@@ -33,7 +35,7 @@ const YourBlogs = () => {
 
     useEffect(() => {
         getPosts()
-    }, [page])
+    }, [page, user])
 
     const goToNextPage = () => {
         navigate('/your-blogs/' + (parseInt(page) + 1))
@@ -46,6 +48,30 @@ const YourBlogs = () => {
     const editPost = (postId) => {
         navigate('/create-collaboration/edit-blog/'.concat(postId))
     }
+
+    const deletePost = async (postId) => {
+        const { error } = await supabase
+            .from('posts')
+            .delete()
+            .eq('id', postId)
+        if (error) {
+            console.error('Error deleting post:', error.message)
+            return
+        }
+        setGlobalMessage({ ...globalMessage, open: false })
+        getPosts()
+    }
+
+    const deletePostQuestion = (postId) => {
+        setGlobalMessage({
+            message: 'Are you sure you want to delete this post?',
+            type: 'warning',
+            open: true,
+            yes: () => { deletePost(postId) },
+            no: () => { setGlobalMessage({ ...globalMessage, open: false }) }
+        })
+    }
+
 
     return (
         <div>
@@ -61,7 +87,7 @@ const YourBlogs = () => {
                                 let description = post.content.filter(item => item.type === 'paragraph').map(item => item.value)[0]
                                 const readableDate = new Date(post.created_at).toDateString()
                                 return (
-                                    <div key={index} className='shadow-lg p-4 cursor-pointer overflow-hidden w-[400px] h-[450px] space-y-4' onClick={() => { editPost(post.id) }}>
+                                    <div key={index} className='shadow-lg p-4 cursor-pointer overflow-hidden w-[400px] h-[450px] space-y-4 relative' onClick={() => { editPost(post.id) }}>
                                         <img src={post.thumbnail} alt={post.title + " image"} className='w-full h-[200px] object-cover' />
                                         <h1 className='text-2xl font-semibold'>{post.title}</h1>
                                         <p className='text-gray-500'>{description && description.slice(0, 100) + '...'}</p>
@@ -69,6 +95,7 @@ const YourBlogs = () => {
                                             <p className='text-gray-400'>{post.author}</p>
                                             <p className='text-gray-400'>{readableDate}</p>
                                         </div>
+                                        <DeleteIcon className='absolute top-0 right-0 cursor-pointer text-red-500 hover:text-red-700 bg-black text-3xl' fontSize='' onClick={(e) => { e.stopPropagation(); deletePostQuestion(post.id) }} />
                                     </div>
                                 )
                             })}

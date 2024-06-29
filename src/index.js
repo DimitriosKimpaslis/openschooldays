@@ -27,6 +27,8 @@ import HelpView from './components/views/HelpView.jsx';
 import HelpManagment from './components/editCollaborationOutlets/HelpManagment.jsx';
 import PostUpdate from './components/editCollaborationOutlets/PostUpdate.jsx';
 import ManageUpdates from './components/editCollaborationOutlets/ManageUpdates.jsx';
+import About from './components/views/About.jsx';
+import Project from './components/views/Project.jsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -49,12 +51,13 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path='/about' element={<h1>About</h1>} />
+          <Route path='/about' element={<About />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/preview' element={<Preview />} />
           <Route path='/edit-preview/:postId' element={<EditPreview />} />
           <Route path="/blog/:page" element={<Blogs />} />
           <Route path='/blog-post/:postId' element={<BlogPost />} />
+          <Route path='/project' element={<Project />} />
           <Route element={<ProtectedRoutes />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/blog-creation' element={<BlogCreation />} />

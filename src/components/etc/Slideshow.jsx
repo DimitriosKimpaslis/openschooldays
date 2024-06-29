@@ -17,9 +17,9 @@ const Slideshow = () => {
         const currentImage = imageRefs.current[currentIndex];
         const previousImage = imageRefs.current[(currentIndex - 1 + imageUrls.length) % imageUrls.length];
         previousImage.style.opacity = 0;
-        previousImage.style.filter = "blur(10px)";
+        previousImage.style.filter = "blur(3px)";
         currentImage.style.opacity = 1;
-        currentImage.style.transition = "opacity 2s";
+        currentImage.style.transition = "opacity 1s";
         currentImage.style.filter = "blur(0)";
 
         const interval = setInterval(() => {
