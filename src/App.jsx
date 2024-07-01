@@ -132,7 +132,7 @@ function App() {
 
             <div className='content'>
               <Header />
-              <div id='header-color' className='h-[180px] bg-gradient mb-10 lg:block hidden'></div>
+              <div id='header-color' className='h-[180px] bg-gradient hidden'></div>
               <Outlet />
             </div>
             <Footer />

@@ -82,20 +82,20 @@ const Header = () => {
                     className='w-14 h-14 cursor-pointer'
                     onClick={() => navigate('/')}
                 />
-                <button class="text-white text-3xl" onClick={ () => setMenu(!menu)}>
-                    <MenuIcon className='text-white text-3xl' fontSize=''/>
+                <button class="text-white text-3xl" onClick={() => setMenu(!menu)}>
+                    <MenuIcon className='text-white text-3xl' fontSize='' />
                 </button>
             </div>
-            <div className={`absolute top-20 z-40 w-full bg-newPink flex flex-col py-5 ${menu ? 'flex' : 'hidden'}`}>
+            <div className={`absolute z-40 w-full bg-newPink flex-col py-5 ${menu ? 'flex' : 'hidden'}`}>
                 <CloseIcon className='absolute top-5 right-5 text-white text-3xl' onClick={() => setMenu(false)} />
-                <ul className='flex flex-col items-center justify-center space-y-4 primary'>
-                    <li className='font-semibold hover:text-gray-400 transition-colors duration-400' onClick={() => goToPage('/')}><NavLink >HOME</NavLink></li>
-                    <li className='relative font-semibold parent-li transition-colors duration-400'><NavLink to={'#'}>PROJECTS <KeyboardArrowDownIcon className='bottom-[2px] relative' /></NavLink>
-                        <ul className='w-40 space-y-2 hidden'>
-                            <li className='hover:text-black text-gray-500 ' onClick={goToProject}><NavLink >PROJECT 1</NavLink></li>
-                            <li className='hover:text-black text-gray-500' onClick={goToProject}><NavLink to={'/project'} >PROJECT 2</NavLink></li>
-                            <li className='hover:text-black text-gray-500 ' onClick={goToProject}><NavLink to={'/project'} >PROJECT 3</NavLink></li>
-                            <li className='hover:text-black text-gray-500' onClick={goToProject}><NavLink to={'/project'} >PROJECT 4</NavLink></li>
+                <ul className='space-y-6 text-xl primary text-center'>
+                    <li className='font-semibold transition-colors duration-400' onClick={() => goToPage('/')}><NavLink >HOME</NavLink></li>
+                    <li className='relative left-2 font-semibold parent-li'><NavLink to={'#'}>PROJECTS <KeyboardArrowDownIcon className='bottom-[2px] relative' /></NavLink>
+                        <ul className=' space-y-2 hidden relative right-2'>
+                            <li className='text-black ' onClick={goToProject}><NavLink >PROJECT 1</NavLink></li>
+                            <li className='text-black' onClick={goToProject}><NavLink >PROJECT 2</NavLink></li>
+                            <li className='text-black ' onClick={goToProject}><NavLink >PROJECT 3</NavLink></li>
+                            <li className='text-black' onClick={goToProject}><NavLink >PROJECT 4</NavLink></li>
                         </ul>
                     </li>
                     <li className='font-semibold hover:text-gray-400 transition-colors duration-400' onClick={() => goToPage('/about')}><NavLink >ABOUT</NavLink></li>
@@ -103,9 +103,12 @@ const Header = () => {
                     <li className='font-semibold hover:text-gray-400 transition-colors duration-400' onClick={() => goToPage('/contact')}><NavLink>CONTACT US</NavLink></li>
                     {user ?
                         <li className='font-semibold hover:text-gray-400 transition-colors duration-400' onClick={() => goToPage('/profile')}><NavLink>PROFILE</NavLink></li>
-                        : <li onClick={() => goToPage('/signin')} className='bg-newSomon px-12 py-2 text-xl w-fit h-fit hover:bg-newPurple text-newPurple hover:text-newSomon transition-colors duration-400'>SIGN IN <TrendingFlatIcon className='relative bottom-[2px]' /></li>}
+                        :
+                        <li className='text-black font-semibold' onClick={() => goToPage('/signin')}><NavLink >SIGN IN</NavLink></li>
+
+                    }
                 </ul>
-                
+
             </div>
         </div >
     )

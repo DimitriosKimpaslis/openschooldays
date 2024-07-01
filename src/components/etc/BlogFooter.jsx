@@ -23,11 +23,11 @@ const BlogFooter = (props) => {
         , [user_uid])
 
     return (
-        <div className='shadow-lg p-4 w-[600px] h-fit mb-10'>
+        <div className='shadow-lg p-4 sm:w-[600px] w-full h-fit mb-10'>
             <div className='flex items-center gap-4'>
                 <img src={author.image} alt='author' className='w-14 h-14 rounded-full object-cover' />
                 <div>
-                    <h1 className='text-2xl font-semibold'>{author.name} {author.surname}</h1>
+                    <h1 className='sm:text-2xl text-lg font-semibold'>{author.name} {author.surname}</h1>
                     <p className='text-gray-500'>{author.description}</p>
                 </div>
             </div>

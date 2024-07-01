@@ -30,14 +30,14 @@ const Slideshow = () => {
 
     return (
         <div className="relative h-full w-full overflow-hidden">
-            <div className="relative top-0 left-0 w-full h-[1200px] flex items-center justify-center">
+            <div className="relative top-0 left-0 w-full lg:h-[1200px] h-[600px] flex items-center justify-center">
                 {imageUrls.map((imageUrl, index) => (
                     <img
                         key={index}
                         src={imageUrl}
                         ref={(el) => (imageRefs.current[index] = el)}
                         alt="slide"
-                        className={`w-full h-full object-cover absolute filter blur-md transition-all ${
+                        className={`w-full h-full object-cover absolute filter blur-sm transition-all ${
                             index === currentIndex ? "opacity-1" : "opacity-0"
                         }`}
                     />
