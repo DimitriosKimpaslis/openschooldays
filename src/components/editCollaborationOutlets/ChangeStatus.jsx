@@ -23,12 +23,12 @@ const ChangeStatus = () => {
     return (
         <div>
             <h1>Change Status</h1>
-            <p className='pb-1'>Change the status of the collaboration</p>
+            <p className='pb-2'>Change the status of the collaboration</p>
             <p className='text-gray-500'>Active is for the currently running collaborations, Inactive for future ideas that are to be executed, and Completed for finished collaborations that no longer need our attention.</p>
-            <div className='flex items-center gap-4 h-32 w-40'>
+            <div className='flex flex-wrap items-center gap-4 py-5'>
                 {statusOptions.map((option, index) => {
                     return (
-                        <button key={index} onClick={() => setStatus(option)} className={`bg-${option === status ? 'green' : 'gray'}-500 w-full hover:bg-gray-600 text-white px-8 py-4 text-xl`}>{option[0].toUpperCase() + option.slice(1,option.length)}</button>
+                        <button key={index} onClick={() => setStatus(option)} className={`bg-${option === status ? 'green' : 'gray'}-500 w-fit lg:hover:bg-gray-600 text-white px-8 py-4 text-xl`}>{option[0].toUpperCase() + option.slice(1,option.length)}</button>
                     )
                 })
                 }

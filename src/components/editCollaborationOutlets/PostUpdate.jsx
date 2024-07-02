@@ -108,28 +108,28 @@ const PostUpdate = () => {
         <div>
             <h1>Post Update</h1>
             <div className='flex flex-col gap-5 mb-10 h-fit'>
-                <p className='text-3xl'>Title:</p>
-                <DynamicTextArea onChange={handleTitleChange} value={title} styles='font-bold text-2xl resize-none focus:outline-none overflow-hidden w-full' rows={1} />
+                <p className='lg:text-3xl text-2xl'>Title:</p>
+                <DynamicTextArea onChange={handleTitleChange} value={title} styles='font-bold lg:text-2xl text-xl resize-none focus:outline-none overflow-hidden w-full' rows={1} />
                 {content.map((field, index) => {
                     switch (field.type) {
                         case 'title':
                             return (
                                 <div className='flex items-center' key={index}>
-                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-2xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='lg:text-2xl text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                 </div>
                             )
                         case 'paragraph':
                             return (
                                 <div className='flex items-center' key={index}>
-                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='lg:text-xl text-lg resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                 </div>
                             )
                         case 'bullets':
                             return (
                                 <div className='flex items-center' key={index}>
-                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
+                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='lg:text-xl text-lg resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                 </div>
                             )

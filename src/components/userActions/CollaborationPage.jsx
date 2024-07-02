@@ -121,18 +121,25 @@ const CollaborationPage = () => {
 
 
     return (
-        <div>
-            <div className='container mx-auto space-y-4 relative py-8'>
-                <ArrowBack location={"/collaboration"} />
-
+        <div className='mt-10'>
+            <div className='container mx-auto space-y-5 relative py-8 lg:px-0 px-3'>
                 <div>
-                    <img src={collaboration.idea && collaboration.idea.thumbnail} alt='collaboration' className='w-full h-[500px] object-contain' />
+                    <div className='lg:block hidden'>
+                        <ArrowBack location={"/collaboration"} />
+                    </div>
+                    <div className={"absolute flex items-center gap-2 top-0 lg:right-0 right-3 lg:p-2 p-1 px-3 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={goToEditPage}>
+                        <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1, collaboration.status.length)}</p>
+                        <SettingsIcon className='relative top-[1px] m-0' />
+                    </div>
+                </div>
+                <div>
+                    <img src={collaboration.idea && collaboration.idea.thumbnail} alt='collaboration' className='w-full lg:h-[500px] object-contain' />
                 </div>
 
 
                 <div>
                     <div className='flex items-center gap-1 border-b-2 border-black'>
-                        <p className='text-2xl'><span className='font-bold text-4xl'>{collaboration.idea && collaboration.idea.title}</span></p>
+                        <p className='font-bold lg:text-4xl text-2xl'>{collaboration.idea && collaboration.idea.title}</p>
                     </div>
                 </div>
 
@@ -144,20 +151,9 @@ const CollaborationPage = () => {
                         collaboration.updates.map((update, index) => {
                             const date = new Date(update.date).toDateString()
                             return <div key={index} className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                                <p className='text-lg'>{update.title} at {date}</p>
+                                <p className='sm:text-lg text-base'>{update.title} at <span className='text-gray-500'>{date}</span></p>
                             </div>
                         })
-                        // <div className='space-y-4'>
-                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        //         <p className='text-lg'>Changed trash cans around PAOK stadium at <span className='text-gray-500'>10/03/2021</span></p>
-                        //     </div>
-                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        //         <p className='text-lg'>Talked with president for issue at <span className='text-gray-500'>23/08/2020</span></p>
-                        //     </div>
-                        //     <div className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
-                        //         <p className='text-lg'>Changed trash cans in Tirolois at <span className='text-gray-500'>23/05/2018</span></p>
-                        //     </div>
-                        // </div>
                         :
                         <div className='flex justify-center items-center h-[200px]'>
                             <p className='text-xl text-gray-500'>No updates for this collaboration</p>
@@ -174,7 +170,7 @@ const CollaborationPage = () => {
                             <p className='text-xl text-gray-500'>No members executing this collaboration</p>
                         </div>
                     }
-                    <div className='flex gap-4'>
+                    <div className='flex sm:justify-normal justify-center flex-wrap gap-4'>
                         {profiles.map((profile, index) => {
                             return <ProfileCard key={index} img={profile.data.image} name={profile.data.name} surname={profile.data.surname} description={profile.data.description} facebook={profile.data.facebook} instagram={profile.data.instagram} email={profile.data.email} telephone={profile.data.telephone} />
                         })}
@@ -189,7 +185,7 @@ const CollaborationPage = () => {
                     <div className='space-y-1'>
                         {collaboration.idea && collaboration.idea.content.map((item, index) => {
                             if (item.type === 'paragraph' || item.type === 'bullets') {
-                                return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
+                                return <p key={index} className='lg:text-xl text-base whitespace-pre-line'>{item.value}</p>
                             }
                             if (item.type === 'image') {
                                 return <img key={index} src={item.value} alt={item.title} className='w-full h-[600px] object-left object-contain' />
@@ -202,10 +198,7 @@ const CollaborationPage = () => {
                     <p className='text-2xl border-b-2 border-black'>Created at <span className='text-xl italic'>{new Date(collaboration.created_at).toDateString()}</span> By:</p>
                     {creatorProfile && <ProfileCard img={creatorProfile.image} name={creatorProfile.name} surname={creatorProfile.surname} description={creatorProfile.description} facebook={creatorProfile.facebook} instagram={creatorProfile.instagram} email={creatorProfile.email} telephone={creatorProfile.telephone} />}
                 </div>
-                <div className={"absolute flex items-center gap-2 top-0 right-0 p-2 cursor-pointer hover:bg-black hover:text-white " + ticketColor} onClick={goToEditPage}>
-                    <p className='font-semibold text-lg'>{collaboration.status && collaboration.status[0].toUpperCase() + collaboration.status.slice(1, collaboration.status.length)}</p>
-                    <SettingsIcon className='relative top-[1px]' />
-                </div>
+
             </div>
         </div>
     )

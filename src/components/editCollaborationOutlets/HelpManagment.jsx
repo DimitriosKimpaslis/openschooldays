@@ -43,7 +43,7 @@ const HelpManagment = () => {
     return (
         <div>
             <h1>Help Posts</h1>
-            <div className='grid grid-cols-3 items-center gap-1 min-h-[300px]'>
+            <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center gap-1 min-h-[300px]'>
                 {(helpNeeded?.length === 0 || helpNeeded === null) ?
                     <div className='col-span-12'>
                         <p className='text-lg text-center text-gray-500'>No help posts in this collaboration</p>
@@ -57,9 +57,9 @@ const HelpManagment = () => {
                                     <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
                                 </div>
                                 <div className='p-3' onClick={() => navigate('/help-page/' + collaboration.id + "/" + helpIndex)}>
-                                    <p className='text-xl font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                    <p className='text-lg'>{help.title}</p>
-                                    <p className='text-xl'>{readableDate}</p>
+                                    <p className='lg:text-xl text-lg font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
+                                    <p className='lg:text-lg text-base'>{help.title}</p>
+                                    <p className='lg:text-lg text-base text-gray-500'>{readableDate}</p>
                                 </div>
                                 <DeleteIcon className='absolute top-0 right-0 text-red-500 hover:text-red-800 cursor-pointer text-4xl bg-black' fontSize='' onClick={() => { deleteHelpQuestion(helpIndex) }} />
                             </div>

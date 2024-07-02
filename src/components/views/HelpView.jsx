@@ -7,6 +7,7 @@ const HelpView = () => {
     const { id, arrayId } = useParams();
     const [helpObject, setHelpObject] = useState({})
     const [title, setTitle] = useState('')
+    const [thumbnail, setThumbnail] = useState('')
 
     useEffect(() => {
         const getHelpObject = async () => {
@@ -20,16 +21,20 @@ const HelpView = () => {
             }
             setHelpObject(data[0].help_needed[arrayId])
             setTitle(data[0].idea.title)
+            setThumbnail(data[0].idea.thumbnail)
         }
         getHelpObject()
     }
         , [id, arrayId])
-    
+
     return (
-        <div className='relative container mx-auto flex flex-col items-center'>
-            <ArrowBack location="goBack" />
-            <h1 className='text-4xl font-semibold'>{title}</h1>
-            <h1>{helpObject.title}</h1>
+        <div className='relative container mx-auto flex flex-col items-center justify-center gap-5 px-3 lg:text-left text-center mt-10 py-10'>
+            <div className='lg:block hidden'>
+                <ArrowBack location="goBack" />
+            </div>
+            <p className='lg:text-4xl text-2xl font-semibold'>{title}</p>
+            <img src={thumbnail} alt={helpObject.title} className='w-[500px] h-[300px] object-contain' />
+            <p className='lg:text-2xl text-xl'>{helpObject.title}</p>
             {helpObject.content?.map((item, index) => {
                 if (item.type === 'paragraph' || item.type === 'bullets') {
                     return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
@@ -40,6 +45,8 @@ const HelpView = () => {
                 return null
             }
             )}
+            {/* time created at */}
+            <p className='text-lg text-gray-500'>Created at: {new Date(helpObject.date).toDateString()}</p>
         </div>
     )
 }

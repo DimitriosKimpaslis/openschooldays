@@ -101,15 +101,15 @@ const AddPeople = () => {
             <p className='text-3xl my-5'>Add People</p>
             <p className='text-xl text-gray-500 mb-10'>Select people to add to the collaboration</p>
             {peopleNotInCollaboration.length > 0 ? (
-                <div className='grid grid-cols-5'>
+                <div className='grid grid-cols-6 gap-3'>
                     {peopleNotInCollaboration.map((person) => {
                         return (
-                            <div key={person.uid} className='flex flex-col items-center relative cursor-pointer' onClick={() => toggleCheckIcon(person)}>
+                            <div key={person.uid} className='flex flex-col items-center relative cursor-pointer lg:col-span-1 sm:col-span-2 col-span-3' onClick={() => toggleCheckIcon(person)}>
                                 <div className='w-20 h-20 relative'>
                                     <img src={person.image} alt='member' className='w-20 h-20 object-cover rounded-full' />
-                                    <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-100 rounded-full'></div>
+                                    <div className='absolute inset-0 bg-black opacity-0 lg:hover:opacity-50 transition-opacity duration-100 rounded-full'></div>
                                 </div>
-                                <p>{person.name + " " + person.surname}</p>
+                                <p className='text-center'>{person.name + " " + person.surname}</p>
                                 {person.showCheckIcon && (
                                     <div className='absolute top-0 right-10'>
                                         <CheckCircleIcon className='text-green-500' />

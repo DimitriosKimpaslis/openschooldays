@@ -187,11 +187,11 @@ const BlogCreation = () => {
     return (
         <div>
                 <div className='container mx-auto flex flex-col items-center text-2xl pb-10'>
-                    <p className='text-5xl font-bold my-20'>Blog Creation</p>
-                    <form className='flex flex-col gap-3'>
+                    <p className='lg:text-5xl text-4xl font-bold my-20'>Blog Creation</p>
+                    <form className='flex flex-col gap-3 lg:px-0 px-3'>
                         <div className='space-y-5'>
                             <p className=' text-4xl font-extralight'>Title:</p>
-                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
+                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-3xl lg:text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
                         </div>
                         <p className='  text-4xl font-extralight'>Thumbnail:</p>
                         <label className='w-fit relative'>
@@ -208,15 +208,15 @@ const BlogCreation = () => {
                                 <FileUploadIcon className='text-white text-7xl' fontSize='' />
                             </div>
                         </label>
-                        <div>
-                            <p className='mb-4  text-4xl font-extralight'>Add Content:</p>
+                        <div className='pb-10'>
+                            <p className='mb-4 text-4xl font-extralight'>Add Content:</p>
                             <div className='flex flex-col gap-5 mb-10 h-fit'>
                                 {content.map((field, index) => {
                                     switch (field.type) {
                                         case 'title':
                                             return (
                                                 <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-2xl lg:text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
                                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                                 </div>
                                             )

@@ -18,7 +18,7 @@ export function DynamicTextArea({ value = '', onChange, styles = '', rows, onKey
         <>
             <textarea
                 ref={textAreaRef}
-                className={styles}
+                className={styles +  " lg:border-none"}
                 onChange={onChange}
                 onKeyUp={(e) => { pressDownEnter(e, index) }}
                 value={value}

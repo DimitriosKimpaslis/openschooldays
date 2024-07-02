@@ -100,6 +100,16 @@ function App() {
     }
   }, [imageViewer.open, loading]);
 
+  const nextImage = () => {
+    if(imageViewer.images.indexOf(imageViewer.image) === imageViewer.images.length - 1) return
+    setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) + 1] })
+  }
+
+  const previousImage = () => {
+    if(imageViewer.images.indexOf(imageViewer.image) === 0) return
+    setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) - 1] })
+  }
+
 
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
@@ -124,8 +134,8 @@ function App() {
             {imageViewer.open &&
               (<div className='absolute bg-black text-white bg-opacity-30 w-full h-full z-50 flex flex-col justify-center items-center ' style={{ top: `${imageViewer.scroll}px` }}>
                 <img src={imageViewer.image} alt='view' className='w-[80%] h-[80%] object-contain' />
-                <NavigateBeforeIcon className='text-5xl cursor-pointer absolute top-[50%] left-0 hover:text-gray-300' fontSize='' onClick={() => { setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) - 1] }) }} />
-                <NavigateNextIcon className='text-5xl cursor-pointer absolute top-[50%] right-0 hover:text-gray-300' fontSize='' onClick={() => { setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) + 1] }) }} />
+                <NavigateBeforeIcon className='text-5xl cursor-pointer absolute top-[50%] left-0 hover:text-gray-300' fontSize='' onClick={previousImage} />
+                <NavigateNextIcon className='text-5xl cursor-pointer absolute top-[50%] right-0 hover:text-gray-300' fontSize='' onClick={nextImage} />
                 <CancelIcon className='text-5xl cursor-pointer absolute top-5 right-5 hover:text-gray-300' fontSize='' onClick={() => { setImageViewer({ ...imageViewer, open: false }) }} />
               </div>)
             }

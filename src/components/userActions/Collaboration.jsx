@@ -56,14 +56,17 @@ const Collaboration = () => {
 
 
     return (
-        <div>
+        <div className='pt-32'>
             <div className='relative container mx-auto py-8'>
-                <ArrowBack location="/profile"/>
-                <p className='text-6xl text-center'>Collaboration</p>
+                <div className='lg:block hidden'>
+                    <ArrowBack location="/profile" />
+                </div>
+                <p className='lg:text-6xl text-5xl text-center mb-10'>Collaboration</p>
                 <div className='flex justify-end items-center px-4'>
                     <div className='flex flex-col items-center hover:text-gray-500 cursor-pointer' onClick={() => navigate('/create-collaboration/create-collaboration')}>
-                        <p className='text-xl font-bold'>Collaboration Creation</p>
-                        <AddCircleIcon className='text-6xl' fontSize='' />
+                        <p className='text-xl font-bold lg:block hidden'>Collaboration Creation</p>
+                        <p className='text-xl font-bold lg:hidden block'>Add</p>
+                        <AddCircleIcon className='lg:text-6xl text-5xl' fontSize='' />
                     </div>
                 </div>
                 <div className='flex justify-center'>
@@ -73,7 +76,7 @@ const Collaboration = () => {
                                 <SosIcon className='text-4xl text-red-500 relative top-[2px]' fontSize='' />
                                 <p className='text-2xl'>Help needed!</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
+                            <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center gap-1 gap-y-3 min-h-[350px]'>
                                 {helpNeeded.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>No help currently needed</p>
@@ -83,14 +86,14 @@ const Collaboration = () => {
                                         return collaboration.help_needed.map((help, helpIndex) => { // Renamed the inner index variable to helpIndex
                                             const readableDate = new Date(help.date).toDateString()
                                             return (
-                                                <div className='w-full h-full gap-1 shadow-md hover:shadow-xl cursor-pointer' key={helpIndex} onClick={() => navigate('/help-page/' + collaboration.id + "/" + helpIndex)}>
+                                                <div className='w-full h-full gap-1 shadow-md hover:shadow-xl cursor-pointer text-center' key={helpIndex} onClick={() => navigate('/help-page/' + collaboration.id + "/" + helpIndex)}>
                                                     <div className='w-full h-32 bg-gray-500'>
                                                         <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
                                                     </div>
                                                     <div className='p-3'>
-                                                        <p className='text-xl font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
-                                                        <p className='text-lg'>{help.title}</p>
-                                                        <p className='text-xl'>{readableDate}</p>
+                                                        <p className='lg:text-xl text-lg font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
+                                                        <p className='lg:text-xl text-lg'>{help.title}</p>
+                                                        <p className='lg:text-xl text-base text-gray-500'>{readableDate}</p>
                                                     </div>
                                                 </div>
                                             )
@@ -103,7 +106,7 @@ const Collaboration = () => {
                                 <CategoryIcon className='text-3xl text-green-500 relative top-[1px]' fontSize='' />
                                 <p className='text-2xl'>Active Collaborations</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
+                            <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center gap-1 gap-y-3 min-h-[350px]'>
                                 {activeCollaborations.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>Empty...</p>
@@ -121,7 +124,7 @@ const Collaboration = () => {
                                 <NotificationsPausedIcon className='text-3xl text-purple-600 relative top-[1px]' fontSize='' />
                                 <p className='text-2xl'>Inactive Collaborations</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
+                            <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center gap-1 gap-y-3 min-h-[350px]'>
                                 {inactiveCollaborations.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>Empty...</p>
@@ -139,7 +142,7 @@ const Collaboration = () => {
                                 <GradeIcon className='text-3xl text-yellow-500 relative top-[1px]' fontSize='' />
                                 <p className='text-2xl'>Completed Collaborations</p>
                             </div>
-                            <div className='grid grid-cols-3 items-center gap-1 min-h-[350px]'>
+                            <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center gap-1 min-h-[350px]'>
                                 {completedCollaborations.length === 0 ?
                                     <div className='col-span-12'>
                                         <p className='text-4xl text-gray-700 text-center'>Such empty...</p>

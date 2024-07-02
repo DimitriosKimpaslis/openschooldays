@@ -32,6 +32,13 @@ div.profileCard:hover div.profilePopup {
     display: block;
 }
 
+/* the popup doesnt even show on screen with 1024 width or less */
+@media (max-width: 1024px) {
+    div.profileCard:hover div.profilePopup {
+        display: none;
+    }
+}
+
 .bg-gradient {
     /* background: linear-gradient(to bottom, #c83474 0%,#f0645c 40%, #f8bc84 100%); */
     background: #f0645c;

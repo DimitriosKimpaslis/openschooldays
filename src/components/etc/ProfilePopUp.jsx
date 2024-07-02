@@ -11,7 +11,7 @@ const ProfilePopUp = ({ img, name, surname, description, facebook, instagram, em
     }
 
     return (
-        <div className='absolute min-w-[250px] text-white hidden hover:block profilePopup top-[-210%] right-[-150%] shadow-lg z-50'>
+        <div className='absolute min-w-[250px] text-white hidden hover:block profilePopup top-[-210%] right-[-150%] shadow-lg z-50 '>
             <div className="bg-newSomon p-2 w-full h-16 rounded-t-lg"></div>
             <div className="bg-neutral-800 h-64 pt-6 p-3 w-full rounded-b-lg">
                 <div className="bg-black rounded-lg w-full h-48 relative mt-6 p-2">
