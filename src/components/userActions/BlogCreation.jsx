@@ -187,20 +187,20 @@ const BlogCreation = () => {
     return (
         <div>
                 <div className='container mx-auto flex flex-col items-center text-2xl pb-10'>
-                    <p className='lg:text-5xl text-4xl font-bold my-20'>Blog Creation</p>
+                    <p className='lg:text-4xl text-3xl font-bold mt-20 mb-5'>Blog Creation</p>
                     <form className='flex flex-col gap-3 lg:px-0 px-3'>
                         <div className='space-y-5'>
-                            <p className=' text-4xl font-extralight'>Title:</p>
-                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles='font-semibold text-3xl lg:text-4xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
+                            <p className=' lg:text-3xl text-2xl font-extralight'>Title:</p>
+                            <DynamicTextArea value={title.value} onChange={(e) => handleTitleChange(e)} styles=' text-xl lg:text-2xl resize-none focus:outline-none overflow-hidden w-full' rows={title.rows} />
                         </div>
-                        <p className='  text-4xl font-extralight'>Thumbnail:</p>
+                    <p className='  lg:text-3xl text-2xl font-extralight'>Thumbnail:</p>
                         <label className='w-fit relative'>
                             <img src={thumbnail} alt='imagePost' className='w-[600px] h-[400px] object-cover' />
                             <div className='flex items-center'>
                                 {thumbnail !== 'https://placehold.co/600x400/png' ? null : <FileUploadIcon className='relative top-[1px]' />}
                                 <div className='flex items-center gap-1'>
                                     {thumbnail !== 'https://placehold.co/600x400/png' && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                    <span>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
+                                    <span className='text-lg'>{thumbnail !== 'https://placehold.co/600x400/png' ? "Image Uploaded" : "No image selected"}</span>
                                 </div>
                             </div>
                             <input onChange={(e) => handleThumbnailUpload(e)} type='file' className='hidden' />
@@ -209,28 +209,28 @@ const BlogCreation = () => {
                             </div>
                         </label>
                         <div className='pb-10'>
-                            <p className='mb-4 text-4xl font-extralight'>Add Content:</p>
+                        <p className='mb-4 lg:text-3xl text-2xl font-extralight'>Add Content:</p>
                             <div className='flex flex-col gap-5 mb-10 h-fit'>
                                 {content.map((field, index) => {
                                     switch (field.type) {
                                         case 'title':
                                             return (
                                                 <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-2xl lg:text-4xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='font-semibold text-xl lg:text-3xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
                                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                                 </div>
                                             )
                                         case 'paragraph':
                                             return (
                                                 <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-lg resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} />
                                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                                 </div>
                                             )
                                         case 'bullets':
                                             return (
                                                 <div className='flex items-center' key={index}>
-                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-xl resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
+                                                    <DynamicTextArea onChange={(e) => handleContentChange(e, index)} value={content[index].value} styles='text-lg resize-none focus:outline-none border-r-4 border-black overflow-hidden w-full' rows={content[index].rows} onKeyUp={checkEnter} index={index} />
                                                     <DeleteIcon className='cursor-pointer hover:text-red-600 text-3xl' fontSize='' onClick={() => removeField(index)} />
                                                 </div>
                                             )
@@ -247,7 +247,7 @@ const BlogCreation = () => {
                                                             {imageSelected ? null : <FileUploadIcon className='relative top-[1px]' />}
                                                             <div className='flex items-center gap-1'>
                                                                 {imageSelected && <CloudDoneIcon className='text-green-500 relative top-[1px]' />}
-                                                                <span>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
+                                                                <span className='text-lg'>{imageSelected ? "Image Uploaded" : "No image selected"}</span>
                                                             </div>
                                                         </div>
                                                         <input onChange={(e) => handleUploadImage(e, index)} type='file' className='hidden' />

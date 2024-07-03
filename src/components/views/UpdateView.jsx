@@ -3,27 +3,27 @@ import { useParams } from 'react-router-dom'
 import { supabase } from '../../client';
 import ArrowBack from '../etc/ArrowBack';
 
-const HelpView = () => {
+const UpdateView = () => {
     const { id, arrayId } = useParams();
-    const [helpObject, setHelpObject] = useState({})
+    const [updateObject, setUpdateObject] = useState({})
     const [title, setTitle] = useState('')
     const [thumbnail, setThumbnail] = useState('')
 
     useEffect(() => {
-        const getHelpObject = async () => {
+        const getUpdateObject = async () => {
             const { data, error } = await supabase
                 .from('collaboration')
-                .select('help_needed, idea')
+                .select('updates, idea')
                 .eq('id', id)
             if (error) {
                 console.error('Error fetching help object:', error.message)
                 return
             }
-            setHelpObject(data[0].help_needed[arrayId])
+            setUpdateObject(data[0].updates[arrayId])
             setTitle(data[0].idea.title)
             setThumbnail(data[0].idea.thumbnail)
         }
-        getHelpObject()
+        getUpdateObject()
     }
         , [id, arrayId])
 
@@ -34,10 +34,11 @@ const HelpView = () => {
             </div>
             <p className='lg:text-4xl text-2xl font-semibold text-center'>{title}</p>
             <div className='flex justify-center'>
-                <img src={thumbnail} alt={helpObject.title} className='w-[500px] h-[300px] object-contain' />
+                <img src={thumbnail} alt={updateObject.title} className='w-[500px] h-[300px] object-contain' />
+
             </div>
-            <p className='lg:text-2xl text-xl'>{helpObject.title}</p>
-            {helpObject.content?.map((item, index) => {
+            <p className='lg:text-2xl text-xl'>{updateObject.title}</p>
+            {updateObject.content?.map((item, index) => {
                 if (item.type === 'paragraph' || item.type === 'bullets') {
                     return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
                 }
@@ -48,9 +49,9 @@ const HelpView = () => {
             }
             )}
             {/* time created at */}
-            <p className='text-lg text-gray-500'>Created at: {new Date(helpObject.date).toDateString()}</p>
+            <p className='text-lg text-gray-500'>Created at: {new Date(updateObject.date).toDateString()}</p>
         </div>
     )
 }
 
-export default HelpView
+export default UpdateView

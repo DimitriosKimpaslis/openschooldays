@@ -9,10 +9,10 @@ const Description = () => {
     <div>
       <h1>Description</h1>
       <div className='space-y-1'>
-        <p className='text-2xl font-semibold'>{collaboration.idea && collaboration.idea.title}</p>
+        <p className='text-xl lg:text-2xl font-semibold'>{collaboration.idea && collaboration.idea.title}</p>
         {collaboration.idea && collaboration.idea.content.map((item, index) => {
           if (item.type === 'paragraph' || item.type === 'bullets') {
-            return <p key={index} className='text-xl whitespace-pre-line'>{item.value}</p>
+            return <p key={index} className='text-base lg:text-xl whitespace-pre-line'>{item.value}</p>
           }
           if (item.type === 'image') {
             return <img key={index} src={item.value} alt={item.title} className='w-full h-[600px] object-left object-contain' />

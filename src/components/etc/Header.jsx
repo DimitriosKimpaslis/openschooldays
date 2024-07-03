@@ -52,7 +52,7 @@ const Header = () => {
             <div className=' text-gray-50 w-full lg:flex hidden justify-between items-center py-6 px-10 absolute z-40 '>
                 <img src={birdLogo}
                     alt='bird logo'
-                    className='w-32 h-32 cursor-pointer'
+                    className='w-24 h-24 cursor-pointer'
                     onClick={() => navigate('/')}
                 />
                 <ul className='flex flex-grow items-center justify-between 2xl:px-52 lg:px-24 text-xl primary'>
@@ -74,7 +74,7 @@ const Header = () => {
                         <img src={image} className='w-14 h-14 rounded-full cursor-pointer object-cover' alt='user profile' />
                         <div className='absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-200 rounded-full'></div>
                     </div>
-                    : <button onClick={() => navigate('/signin')} className='bg-newSomon px-12 py-2 text-xl w-fit h-fit hover:bg-newPurple text-newPurple hover:text-newSomon transition-colors duration-400'>REGISTER NOW <TrendingFlatIcon className='relative bottom-[2px]' /></button>}
+                    : <button onClick={() => navigate('/signin')} className='bg-newSomon px-12 py-2 text-xl w-fit h-fit hover:bg-newPurple text-newPurple hover:text-newSomon transition-colors duration-400'>SIGN IN <TrendingFlatIcon className='relative bottom-[2px]' /></button>}
             </div>
             <div className='bg-newPink w-full h-20 lg:hidden flex justify-between items-center px-10 relative'>
                 <img src={birdLogo}

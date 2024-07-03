@@ -13,8 +13,6 @@ import EditProfile from './components/userActions/EditProfile.jsx';
 import BlogPost from './components/views/BlogPost.jsx';
 import Blogs from './components/views/Blogs.jsx';
 import YourBlogs from './components/userActions/YourBlogs.jsx';
-import EditPost from './components/userActions/EditPost.jsx';
-import EditPreview from './components/userActions/EditPreview.jsx';
 import Collaboration from './components/userActions/Collaboration.jsx';
 import CreateCollaboration from './components/userActions/CreateCollaboration.jsx';
 import CollaborationPage from './components/userActions/CollaborationPage.jsx';
@@ -29,6 +27,7 @@ import PostUpdate from './components/editCollaborationOutlets/PostUpdate.jsx';
 import ManageUpdates from './components/editCollaborationOutlets/ManageUpdates.jsx';
 import About from './components/views/About.jsx';
 import Project from './components/views/Project.jsx';
+import UpdateView from './components/views/UpdateView.jsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -54,7 +53,6 @@ root.render(
           <Route path='/about' element={<About />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/preview' element={<Preview />} />
-          <Route path='/edit-preview/:postId' element={<EditPreview />} />
           <Route path="/blog/:page" element={<Blogs />} />
           <Route path='/blog-post/:postId' element={<BlogPost />} />
           <Route path='/project' element={<Project />} />
@@ -62,12 +60,12 @@ root.render(
             <Route path='/profile' element={<Profile />} />
             <Route path='/blog-creation' element={<BlogCreation />} />
             <Route path='/your-blogs/:page' element={<YourBlogs />} />
-            <Route path='/edit-post/:postId' element={<EditPost />} />
             <Route path='/edit-profile' element={<EditProfile />} />
             <Route path="/collaboration" element={<Collaboration />} />
             <Route path='/create-collaboration/:editMode/:id?' element={<CreateCollaboration />} />
             <Route path='/collaboration-page/:status/:id' element={<CollaborationPage />} />
             <Route path='/help-page/:id/:arrayId' element={<HelpView />} />
+            <Route path='/update-page/:id/:arrayId' element={<UpdateView />} />
             <Route path='/collaboration-page-edit/:id' element={<CollaborationPageEdit />}>
               <Route index element={<Description />} />
               <Route path='change-content/:editMode/:id' element={<CreateCollaboration />} />

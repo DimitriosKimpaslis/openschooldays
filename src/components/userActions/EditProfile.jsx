@@ -27,6 +27,7 @@ const EditProfile = () => {
 
     const getUserInformation = async () => {
         setLoading(true)
+        if (user === null) return
         const { data, error } = await supabase
             .from('usersInfo')
             .select('*')
@@ -45,13 +46,13 @@ const EditProfile = () => {
         setInstagram(data[0].instagram)
         setEmail(data[0].email)
         setTelephone(data[0].telephone)
-        setTempUserDetails({ name: data[0].name, surname: data[0].surname, image: data[0].image !== null ? data[0].image : 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg', description: data[0].description, facebook: data[0].facebook, instagram: data[0].instagram, email: data[0].email, telephone: data[0].telephone})
+        setTempUserDetails({ name: data[0].name, surname: data[0].surname, image: data[0].image !== null ? data[0].image : 'https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg', description: data[0].description, facebook: data[0].facebook, instagram: data[0].instagram, email: data[0].email, telephone: data[0].telephone })
         setLoading(false)
     }
 
     useEffect(() => {
         getUserInformation()
-    }, [])
+    }, [user])
 
 
 
@@ -77,7 +78,6 @@ const EditProfile = () => {
             console.error('Error updating user information:', error.message)
             return
         }
-        console.log('User information updated:', data)
         getUserInformation()
         setEdit(false)
     }
@@ -85,7 +85,7 @@ const EditProfile = () => {
 
 
     const cancelChanges = () => {
-        setTempUserDetails({ name: name, surname: surname, image: image, description: description, facebook: facebook, instagram: instagram, email: email, telephone: telephone})
+        setTempUserDetails({ name: name, surname: surname, image: image, description: description, facebook: facebook, instagram: instagram, email: email, telephone: telephone })
         setEdit(false)
     }
 
@@ -122,7 +122,7 @@ const EditProfile = () => {
         <div >
             <div className='flex justify-center items-center'>
                 {edit ?
-                    <div className='container flex flex-col items-center relative p-4'>
+                    <div className='container flex flex-col items-center relative p-4 my-10'>
                         <div className='space-y-2'>
                             <div className='flex gap-4 items-center justify-center'>
                                 <p className='text-center text-3xl p-4 border-yellow-400 border-8 border-dashed'>Editing Profile Page</p>
@@ -160,7 +160,7 @@ const EditProfile = () => {
                             <input type='number' placeholder='Empty..' value={tempUserDetails.telephone} onChange={(e) => setTempUserDetails({ ...tempUserDetails, telephone: e.target.value })} className='border border-black p-2 w-full' />
                             <p className='font-bold'>Description:</p>
                             <textarea placeholder='Empty..' value={tempUserDetails.description} onChange={(e) => setTempUserDetails({ ...tempUserDetails, description: e.target.value })} className='border border-black p-2 w-full' />
-                            
+
                             <div className='flex justify-center gap-3 text-lg'>
                                 <button className='bg-green-500 w-full hover:bg-green-600 text-white font-bold py-2 px-4 rounded' onClick={saveChanges}>Save Changes</button>
                                 <button className='bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={cancelChanges}>Cancel</button>
@@ -175,23 +175,26 @@ const EditProfile = () => {
                     </div>
 
                     :
-                    <div className='container flex flex-col items-center text-white'>
-                        <div className='bg-neutral-950 px-20 py-4 my-10'>
-                            <div className='flex gap-4 items-center justify-center'>
-                                <p className='text-center text-3xl my-6'>Profile Page</p>
-                                <Tooltip title="Edit Profile">
-                                    <EditIcon className='relative top-[1px] hover:text-gray-600 cursor-pointer text-2xl' fontSize='' onClick={() => setEdit(true)} />
-                                </Tooltip>
+                    <div className='container lg:my-10 mt-32 mb-10'>
+                        <div className=' my-10 grid lg:grid-cols-2 gap-10 px-3'>
+                            <div className='space-y-3 flex flex-col justify-center items-center'>
+                                <div className='px-4 text-xl space-y-3'>
+                                    <p className='md:text-5xl text-3xl pb-12 font-bold'>{name} {surname}</p>
+                                    <p><span className='font-semibold'>Description:</span> {description ? description : "Empty..."}</p>
+                                    <p><span className='font-semibold'>Email:</span> {email ? email : "Empty..."}</p>
+                                    <p><span className='font-semibold'>Tel:</span> {telephone ? telephone : "Empty..."}</p>
+                                    <div className='flex gap-3'>
+                                        {facebook && <FacebookIcon className='text-5xl text-blue-800 hover:text-blue-500 cursor-pointer' onClick={() => openNewTab(facebook)} fontSize='' />}
+                                        {instagram && <InstagramIcon className='text-5xl text-pink-600 hover:text-pink-400 cursor-pointer' onClick={() => openNewTab(instagram)} fontSize='' />}
+                                    </div>
+                                </div>
                             </div>
-                            <div className='text-2xl space-y-3'>
-                                <img src={image} className='w-[400px] h-[400px] rounded-full object-cover mb-10' alt="a person" />
-                                <p>Name: {name ? name : "Empty..."}</p>
-                                <p>Surname: {surname ? surname : "Empty..."}</p>
-                                <p>Description: {description ? description : "Empty..."}</p>
-                                <p>Facebook: {facebook ? facebook : "Empty..."}</p>
-                                <p>Instagram: {instagram ? instagram : "Empty..."}</p>
-                                <p>Email: {email ? email : "Empty..."}</p>
-                                <p>Tel: {telephone ? telephone : "Empty..."}</p>
+                            <div className='flex justify-center items-center bg-newSomon xl:p-52 md:p-32 p-20 w-full h-full relative'>
+                                <img src={image} className='' alt="a person" />
+                                <div className='absolute top-3 right-3 flex items-center gap-1 hover:text-gray-600 cursor-pointer' onClick={() => setEdit(true)}>
+                                    <p className='text-lg font-semibold'>Edit Profile</p>
+                                    <EditIcon className='relative text-2xl' fontSize='' />
+                                </div>
                             </div>
                         </div>
 

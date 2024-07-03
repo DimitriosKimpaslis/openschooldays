@@ -55,7 +55,7 @@ const ManageUpdates = () => {
                               <div className='w-full h-32 bg-gray-500' onClick={() => navigate('/help-page/' + collaboration.id + "/" + updateIndex)}>
                                   <img src={collaboration.idea.thumbnail} alt='collaboration' className='w-full h-full object-cover' />
                               </div>
-                              <div className='p-3' onClick={() => navigate('/help-page/' + collaboration.id + "/" + updateIndex)}>
+                              <div className='p-3' onClick={() => navigate('/update-page/' + collaboration.id + "/" + updateIndex)}>
                                   <p className='lg:text-xl text-lg font-bold'>{collaboration.idea.title.length > 75 ? collaboration.idea.title.slice(0, 75) + "..." : collaboration.idea.title}</p>
                                   <p className='lg:text-lg text-base'>{update.title}</p>
                                   <p className='lg:text-lg text-base text-gray-500'>{readableDate}</p>

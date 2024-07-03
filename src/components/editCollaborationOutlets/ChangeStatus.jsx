@@ -8,7 +8,7 @@ const ChangeStatus = () => {
     const statusOptions = ['active', 'inactive', 'completed'];
     const navigate = useNavigate();
     const updateStatus = async () => {
-        const { data, error } = await supabase
+        const {  error } = await supabase
             .from('collaboration')
             .update({ status: status })
             .eq('id', collaboration.id)
@@ -16,7 +16,6 @@ const ChangeStatus = () => {
             console.error('Error updating status:', error.message)
             return
         }
-        console.log(data)
         navigate('/collaboration')
     }
 

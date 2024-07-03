@@ -48,7 +48,6 @@ const CollaborationPage = () => {
         const fetchData = async () => {
             try {
                 const data = await getCollaborationData();
-                console.log(data);
                 let created_by_uid = data.created_by_uid;
                 if (data) {
                     let memberUids = [];
@@ -150,7 +149,7 @@ const CollaborationPage = () => {
                     {collaboration.updates && collaboration.updates.length !== 0 ?
                         collaboration.updates.map((update, index) => {
                             const date = new Date(update.date).toDateString()
-                            return <div key={index} className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
+                            return <div onClick={() => {navigate('/update-page/' + collaboration.id + "/" + index)}} key={index} className='shadow-md hover:text-white hover:bg-black py-1 px-4 cursor-pointer'>
                                 <p className='sm:text-lg text-base'>{update.title} at <span className='text-gray-500'>{date}</span></p>
                             </div>
                         })

@@ -14,7 +14,6 @@ const CollaborationPageEdit = () => {
 
   const { globalMessage, setGlobalMessage } = useContext(GlobalMessageContext)
   const { user } = useContext(UserContext)
-  console.log(globalMessage, "globalMessage")
 
   const getCollaborationData = async () => {
     const { data, error } = await supabase
@@ -26,7 +25,6 @@ const CollaborationPageEdit = () => {
       return
     }
     setCollaboration(data[0])
-    console.log(data[0])
   }
 
   useEffect(() => {
@@ -81,7 +79,7 @@ const CollaborationPageEdit = () => {
 
 
   return (
-    <div className='relative container mx-auto'>
+    <div className='relative container mx-auto mt-10'>
       <div className='lg:block hidden'>
         <ArrowBack location={"/collaboration"} />
       </div>

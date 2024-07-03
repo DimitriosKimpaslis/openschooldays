@@ -18,15 +18,8 @@ const Preview = () => {
     setContent(JSON.parse(previewContent))
 
     let previewThumbnail = localStorage.getItem('thumbnail')
-    console.log(previewThumbnail, 'previewThumbnail', typeof previewThumbnail)
     setThumbnail(previewThumbnail)
   }, [])
-
-  useEffect(() => {
-    console.log('Title:', title)
-    console.log('Content:', content)
-    console.log('Thumbnail:', thumbnail)
-  }, [title, content, thumbnail])
 
   const { user } = useContext(UserContext)
   const userId = user.id
@@ -49,8 +42,6 @@ const Preview = () => {
       console.error('Error inserting new post:', error.message)
       return
     }
-
-    console.log('New post inserted:', data)
     localStorage.removeItem('title')
     localStorage.removeItem('content')
     localStorage.removeItem('thumbnail')
@@ -58,8 +49,8 @@ const Preview = () => {
   }
 
   return (
-    <div>
-        <div className='container mx-auto flex flex-col items-center gap-5'>
+    <div className='lg:my-48 my-20'>
+        {/* <div className='container mx-auto flex flex-col items-center gap-5'>
           <h1 className='text-5xl font-bold'>{title}</h1>
           {thumbnail && <img src={thumbnail} alt={title + " image"} className='w-[800px] h-[500px] object-contain' />}
           <div>
@@ -80,7 +71,29 @@ const Preview = () => {
             })}
           </div>
           <button onClick={handleUpload} className='bg-blue-500 text-white px-5 py-2 rounded-md'>Publish</button>
+      </div> */}
+      <div className='container mx-auto flex flex-col items-center gap-5 max-w-[800px] lg:px-0 px-4'>
+        <p className='sm:text-5xl text-4xl font-bold'>{title}</p>
+        {thumbnail && <img src={thumbnail} alt={title + " image"} className='sm:w-[800px] sm:h-[500px] object-contain bg-black' />}
+        <div className='space-y-5'>
+          {content && content.map((item, index) => {
+            if (item.type === 'title') {
+              return <p key={index} className='sm:text-3xl text-2xl font-semibold'>{item.value}</p>
+            }
+            if (item.type === 'paragraph') {
+              return <p key={index} className='sm:text-xl text-lg'>{item.value}</p>
+            }
+            if (item.type === "bullets") {
+              return <p key={index} className='sm:text-xl text-lg whitespace-pre-line'>{item.value}</p>
+            }
+            if (item.type === 'image') {
+              return <img key={index} src={item.value} alt={title} className='sm:w-[800px] sm:h-[500px] object-contain' />
+            }
+            return null
+          })}
         </div>
+        <button onClick={handleUpload} className='bg-newSomon hover:bg-gray-600 text-newPink px-10 py-2 text-xl'>Update</button>
+      </div>
     
     </div>
   )

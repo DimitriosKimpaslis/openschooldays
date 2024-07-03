@@ -79,7 +79,6 @@ const AddPeople = () => {
         if (collaboration.executed_by_names !== null) {
             executed_by_names.push(...collaboration.executed_by_names)
         }
-        console.log(executed_by_uids, executed_by_names);
         const { error } = await supabase
             .from('collaboration')
             .update({ executed_by_uids: executed_by_uids, executed_by_names: executed_by_names })
@@ -88,13 +87,8 @@ const AddPeople = () => {
             console.error('Error updating collaboration:', error.message)
             return
         }
-        console.log('Collaboration updated successfully')
         window.location.reload();
     }
-
-    useEffect(() => {
-        console.log(peopleToAdd)
-    }, [peopleToAdd])
 
     return (
         <div >
