@@ -18,7 +18,7 @@ export const LoadingContext = createContext()
 function App() {
 
   const [user, setUser] = useState(null);
-
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [globalMessage, setGlobalMessage] = useState({
     message: '',
@@ -59,7 +59,6 @@ function App() {
     }
   }, []);
 
-  const location = useLocation();
 
   const checkForTransparentHeader = (pathname) => {
     if (pathname === '/' || pathname === "/about" || pathname === "/project") {
@@ -92,21 +91,37 @@ function App() {
 
   useEffect(() => {
     const body = document.querySelector('body');
-    if (imageViewer.open || loading) {
+    if (imageViewer.open) {
       body.style.overflow = 'hidden';
     }
     else {
       body.style.overflow = 'auto';
     }
-  }, [imageViewer.open, loading]);
+  }, [imageViewer.open]);
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (loading) {
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.overflow = 'auto';
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    if (loading || location.pathname === '/' || location.pathname === "/project") {
+      setTimeout(() => { window.scroll(0,0) }, 500);
+    } 
+  }, [location.pathname, loading]);
+
 
   const nextImage = () => {
-    if(imageViewer.images.indexOf(imageViewer.image) === imageViewer.images.length - 1) return
+    if (imageViewer.images.indexOf(imageViewer.image) === imageViewer.images.length - 1) return
     setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) + 1] })
   }
 
   const previousImage = () => {
-    if(imageViewer.images.indexOf(imageViewer.image) === 0) return
+    if (imageViewer.images.indexOf(imageViewer.image) === 0) return
     setImageViewer({ ...imageViewer, image: imageViewer.images[imageViewer.images.indexOf(imageViewer.image) - 1] })
   }
 

@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import carousel1 from "../../media/images/carousel1.jpg";
-import carousel2 from "../../media/images/carousel2.jpg";
-import carousel3 from "../../media/images/carousel3.jpg";
 
 const Slideshow = () => {
-    const imageUrls = [carousel1, carousel2, carousel3];
+    const imageUrls = ["https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/SiteImages/carousel1.e577d66d541f78139cb8.jpg?t=2024-07-03T11%3A32%3A47.427Z", "https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/SiteImages/carousel2.0d1968599086f1b61e2e.jpg?t=2024-07-03T11%3A32%3A53.921Z", "https://qokcqfzgzxiqcoswvfjr.supabase.co/storage/v1/object/public/Media/SiteImages/carousel3.81ae70584e366e279ad6.jpg?t=2024-07-03T11%3A33%3A00.102Z"];
     const [currentIndex, setCurrentIndex] = useState(0);
     const imageRefs = useRef([]);
 

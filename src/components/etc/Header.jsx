@@ -82,7 +82,7 @@ const Header = () => {
                     className='w-14 h-14 cursor-pointer'
                     onClick={() => navigate('/')}
                 />
-                <button class="text-white text-3xl" onClick={() => setMenu(!menu)}>
+                <button className="text-white text-3xl" onClick={() => setMenu(!menu)}>
                     <MenuIcon className='text-white text-3xl' fontSize='' />
                 </button>
             </div>
